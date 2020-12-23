@@ -82,7 +82,7 @@ public class CustomArrayInt : Editor
 
                 for (int j = 0; j < someClass.mArray[i].Length; j++)
                 {
-                    someClass.mArray[i][j] = EditorGUILayout.IntField(someClass.mArray[i][j], GUILayout.Width(20));
+                    someClass.mArray[i][j] = EditorGUILayout.IntField(someClass.mArray[i][j], GUILayout.Width(30));
                 }
 
                 EditorGUILayout.EndHorizontal();

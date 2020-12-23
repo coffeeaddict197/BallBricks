@@ -70,7 +70,6 @@ public static class BoundsUltility
         return new Vector2(x, y);
     }
 
-
     public static Vector2 BottomMiddlePoint(this Bounds bounds)
     {
         float x = bounds.center.x;

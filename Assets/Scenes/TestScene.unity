@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick: {fileID: 3311581726244617736, guid: c70a6fa43483b5549bbd75138ba3d2ef, type: 3}
+  triagle: {fileID: 3311581726244617736, guid: 9859dc9b3bdd1834d9e288468c67a020, type: 3}
   numOfWidth: 9
   offset: 0.02
   mArray:

@@ -52,7 +52,6 @@ public static class ScreenUltility
         return screenBounds;
     }
 
-
     public static Vector2 BottomMiddlePoint(this Camera cam)
     {
         Vector2 screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width/2, 0, cam.transform.position.z));
