@@ -16,22 +16,26 @@ public class DrawTrajectory : MonoBehaviour
     [SerializeField] Vector2 touchPos;
     [SerializeField] Vector2 direction;
     [SerializeField] float dotDistance;
-    [SerializeField] int changeDirectionCounter;
     [Space]
 
     [Header("Dot Line")]
     [SerializeField] List<GameObject> Dots;
+    [SerializeField] List<DotScript> DotScripts = new List<DotScript>();
+
+    [Header("Flags")]
+    [SerializeField] bool isDirectionChanged;
 
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
-        changeDirectionCounter = 0;
+        isDirectionChanged = false;
 
         for (int i = 0; i < Dots.Count; i++)
         {
             Dots[i] = ObjectPool.Instance.Spawn(DOT_TAG);
             Dots[i].SetActive(true);
+            DotScripts.Add(Dots[i].GetComponent<DotScript>());
         }
     }
 
@@ -55,7 +59,7 @@ public class DrawTrajectory : MonoBehaviour
 
     private void DrawLine(Touch touch)
     {
-        changeDirectionCounter = 0;
+        isDirectionChanged = false;
 
         touchPos = mainCamera.ScreenToWorldPoint(touch.position);
         if (touchPos.y < baseBallPos.y)
@@ -70,45 +74,31 @@ public class DrawTrajectory : MonoBehaviour
         {
             var nextPos = dotPos + dotDistance * direction;
 
-            if (CollideChecker.Instance.IsWallCollided(nextPos) && changeDirectionCounter == 0)
+            if (CollideChecker.Instance.IsWallCollided(nextPos))
             {
-                ChangeDirection(nextPos);
+                if (!isDirectionChanged)
+                {
+                    CollideChecker.Instance.ChangeDirection(nextPos, ref direction);
+                    isDirectionChanged = true;
+                }
+                else
+                {
+                    DotScripts[i].Reset();
+                    continue;
+                }
             }
+           
             dotPos += dotDistance * direction;
             Dots[i].transform.position = dotPos;
             Dots[i].SetActive(true);
         }
     }
 
-    private void ChangeDirection(Vector2 pos)
-    {
-        switch (CollideChecker.Instance.GetWallCollidedDirection(pos))
-        {
-            case CollideDirection.Top: 
-            case CollideDirection.Bottom:
-                {
-                    direction.y *= -1;
-                    break;
-                }
-            case CollideDirection.Left: 
-            case CollideDirection.Right:
-                {
-                    direction.x *= -1;
-                    break;
-                }
-            default:
-                break;
-        }
-
-        changeDirectionCounter++;
-    }
-
     public void Reset()
     {
         for (int i = 0; i < Dots.Count; i++)
         {
-            Dots[i].SetActive(false);
+            Dots[i].transform.position = baseBallPos;
         }
-        changeDirectionCounter = 0;
     }
 }

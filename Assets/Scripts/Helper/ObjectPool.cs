@@ -7,6 +7,7 @@ public class Preallocation
     public GameObject gameObject;
     public int count;
     public bool expandable;
+    public int firstIndex;
 }
 
 public class ObjectPool : MonoSingleton<ObjectPool>
@@ -22,22 +23,31 @@ public class ObjectPool : MonoSingleton<ObjectPool>
 
         pooledGobjects = new List<GameObject>();
 
+        int currentIndex = 0;
         foreach (Preallocation item in preAllocations)
         {
-            for (int i = 0; i < item.count; ++i)
+            item.firstIndex = currentIndex;
+            for (int i = currentIndex; i < currentIndex + item.count; ++i)
             {
                 pooledGobjects.Add(CreateGobject(item.gameObject));
             }
+            currentIndex += item.count;
         }
     }
 
     public GameObject Spawn(string tag)
     {
-        for (int i = 0; i < pooledGobjects.Count; ++i)
+        foreach (var item in preAllocations)
         {
-            if (!pooledGobjects[i].activeSelf && pooledGobjects[i].tag.Equals(tag))
+            if (item.gameObject.CompareTag(tag))
             {
-                return pooledGobjects[i];
+                for (int i = item.firstIndex; i < item.firstIndex + item.count; ++i)
+                {
+                    if (!pooledGobjects[i].activeSelf)
+                    {
+                        return pooledGobjects[i];
+                    }
+                }
             }
         }
 
