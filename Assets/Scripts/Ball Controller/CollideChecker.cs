@@ -39,24 +39,35 @@ public class CollideChecker : MonoSingleton<CollideChecker>
         return CollideDirection.None;
     }
 
-    public void ChangeDirection(Vector2 pos, ref Vector2 direction)
+    public CollideDirection GetCubeCollidedDirection(Vector2 pos, GameObject cube)
+    {
+        // ongoing
+        return CollideDirection.None;
+    }
+
+    public void ChangeDirection_WallCollided(Vector2 pos, ref Vector2 curDirection)
     {
         switch (GetWallCollidedDirection(pos))
         {
             case CollideDirection.Top:
             case CollideDirection.Bottom:
                 {
-                    direction.y *= -1;
+                    curDirection.y *= -1;
                     break;
                 }
             case CollideDirection.Left:
             case CollideDirection.Right:
                 {
-                    direction.x *= -1;
+                    curDirection.x *= -1;
                     break;
                 }
             default:
                 break;
         }
+    }
+
+    public void ChangeDirection_CubeCollided(Vector2 pos, ref Vector2 curDirection)
+    {
+        // ongoing
     }
 }

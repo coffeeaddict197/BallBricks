@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawTrajectory : MonoBehaviour
+public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 {
     const string DOT_TAG = "Dot";
 
     [Header("Gameobjects")]
     [SerializeField] Camera mainCamera;
-    [SerializeField] GameObject prefab;
     [Space]
 
-    [Header("Fire line drawer")]
-    [SerializeField] Vector2 baseBallPos;
+    [Header("Line drawer")]
     [SerializeField] Vector2 touchPos;
-    [SerializeField] Vector2 direction;
-    [SerializeField] float dotDistance;
+    [SerializeField] Vector2 basePos;
+    [SerializeField] Vector2 currentPos;
+    [SerializeField] Vector2 nextPos;
+
+    [SerializeField] Vector2 baseDirection;
+    [SerializeField] Vector2 currentDirection;
+
+    [SerializeField] float dotGap;
     [Space]
 
     [Header("Dot Line")]
@@ -23,13 +27,12 @@ public class DrawTrajectory : MonoBehaviour
     [SerializeField] List<DotScript> DotScripts = new List<DotScript>();
 
     [Header("Flags")]
-    [SerializeField] bool isDirectionChanged;
+    [SerializeField] bool isCollided;
 
     // Start is called before the first frame update
     void Start()
     {
-        mainCamera = Camera.main;
-        isDirectionChanged = false;
+        isCollided = false;
 
         for (int i = 0; i < Dots.Count; i++)
         {
@@ -42,6 +45,8 @@ public class DrawTrajectory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (BallLauncher.Instance.isMoving) return;
+
         if (Input.touchCount == 1)
         {
             var touch = Input.GetTouch(0);
@@ -53,52 +58,67 @@ public class DrawTrajectory : MonoBehaviour
             else if (touch.phase == TouchPhase.Ended)
             {
                 Reset();
+                if (touchPos.y > basePos.y) BallLauncher.Instance.StartFire(baseDirection);
             }
         }
     }
 
     private void DrawLine(Touch touch)
     {
-        isDirectionChanged = false;
+        isCollided = false;
 
         touchPos = mainCamera.ScreenToWorldPoint(touch.position);
-        if (touchPos.y < baseBallPos.y)
+        if (touchPos.y < basePos.y)
         {
             Reset();
             return;
         }
 
-        direction = (touchPos - baseBallPos).normalized;
-        Vector2 dotPos = baseBallPos;
+        baseDirection = (touchPos - basePos).normalized;
+        currentDirection = baseDirection;
+
+        currentPos = basePos;
         for (int i = 0; i < Dots.Count; i++)
         {
-            var nextPos = dotPos + dotDistance * direction;
+            nextPos = currentPos + dotGap * currentDirection;
 
             if (CollideChecker.Instance.IsWallCollided(nextPos))
             {
-                if (!isDirectionChanged)
-                {
-                    CollideChecker.Instance.ChangeDirection(nextPos, ref direction);
-                    isDirectionChanged = true;
-                }
+                if (!isCollided) WallCollide();
                 else
                 {
                     DotScripts[i].Reset();
                     continue;
                 }
             }
-           
-            dotPos += dotDistance * direction;
-            Dots[i].transform.position = dotPos;
+            else currentPos = nextPos;
+
+            Dots[i].transform.position = currentPos;
             Dots[i].SetActive(true);
         }
+    }
+
+    public void CubeCollide()
+    {
+        CollideChecker.Instance.ChangeDirection_CubeCollided(nextPos, ref currentDirection);
+
+        nextPos = currentPos + dotGap * currentDirection;
+        isCollided = true;
+    }
+
+    public void WallCollide()
+    {
+        CollideChecker.Instance.ChangeDirection_WallCollided(nextPos, ref currentDirection);
+
+        nextPos = currentPos + dotGap * currentDirection;
+        isCollided = true;
     }
 
     public void Reset()
     {
         for (int i = 0; i < Dots.Count; i++)
         {
-            Dots[i].transform.position = baseBallPos;
+            Dots[i].transform.position = basePos;
         }
     }
 }
