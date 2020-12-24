@@ -7,11 +7,15 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     Camera cam;
-    [SerializeField] GameObject test;
+    [SerializeField] GameObject brick;
+    [SerializeField] GameObject triagle;
+
     [SerializeField] int numOfWidth;
     [SerializeField] float offset;
     public ArrayInt[] mArray;
 
+
+    GameObject baseObject;
     private void Awake()
     {
         cam = Camera.main;
@@ -19,27 +23,66 @@ public class MapGenerator : MonoBehaviour
     //Letter box
     private void Start()
     {
-        
-        Debug.Log(mArray[mArray.Length - 1][mArray[mArray.Length - 1].Length - 1]); //debugs the last value
 
+        DrawMatrix();
+    }
 
+     //Get distance Heigh
+    public void DrawMatrix()
+    {
         Vector2 leftPoint = cam.TopLeftPoint();
         Vector2 rightPoint = cam.TopRightPoint();
-        float distance = (Vector2.Distance(leftPoint, rightPoint) - offset * (numOfWidth - 1)) / numOfWidth;
+        float distance = (Vector2.Distance(leftPoint, rightPoint) - offset * (numOfWidth - 1)) / numOfWidth;  //Distance mean scale 
+        float scaleFactor = brick.GetComponent<SpriteRenderer>().sprite.rect.width / brick.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+
+        //Convert scale to distance accurate
+        distance /= scaleFactor;
+
+        float distanceY = 0f;
+        float distanceX = 0f;
+        //Create base object
+        baseObject = Instantiate(brick, transform);
+        baseObject.transform.localScale = new Vector2(distance, distance);
+        distanceY = baseObject.GetComponent<SpriteRenderer>().bounds.size.y;
+        distanceX = baseObject.GetComponent<SpriteRenderer>().bounds.size.x;
+        baseObject.SetActive(false);
 
 
-        for (int i = 0; i < 9; i++)
+
+        for (int i = 0; i < numOfWidth; i++)
         {
-            Vector2 fistPos = new Vector2(leftPoint.x + distance / 2, leftPoint.y - distance / 2);
-            for (int j = 0; j < 9; j++)
+            Vector2 fistPos = new Vector2(leftPoint.x, leftPoint.y);
+            for (int j = 0; j < numOfWidth; j++)
             {
-                GameObject block = Instantiate(test);
-                block.transform.localScale = new Vector2(distance, distance);
-                block.transform.position = new Vector2(fistPos.x, fistPos.y);
-                fistPos = new Vector2(fistPos.x + distance + offset, fistPos.y);
+                if (mArray[i][j] == 0) //Blank
+                {
+
+                }
+                else if (mArray[i][j] == -1)  //Inscre ball
+                {
+
+                }
+                else if(mArray[i][j]>0)
+                {
+                    GameObject block = Instantiate(brick, transform);
+                    //Setup
+                    block.transform.localScale = new Vector2(distance, distance);
+                    block.transform.position = new Vector2(fistPos.x + distanceX  / 2, fistPos.y - distanceY / 2);
+                    block.GetComponent<Brick>().Point = mArray[i][j];
+                }
+                else
+                {
+                    GameObject tria = Instantiate(triagle, transform);
+                    //Setup
+                    tria.transform.localScale = new Vector2(distance, distance);
+                    tria.transform.position = new Vector2(fistPos.x + distanceX / 2, fistPos.y - distanceY / 2);
+                    tria.GetComponent<Triagle>().Point = mArray[i][j];
+                }
+                fistPos = new Vector2(fistPos.x + distanceX + offset, fistPos.y);
             }
-            leftPoint = new Vector2(leftPoint.x, leftPoint.y - distance - offset);
+            leftPoint = new Vector2(leftPoint.x, leftPoint.y - distanceY - offset);
         }
+
     }
 
 }
