@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
-[CustomEditor(typeof(MapGenerator))]
+using System;
+[CustomEditor(typeof(Level))]
 public class CustomArrayInt : Editor
 {
     int firstDimensionSize;
@@ -14,7 +14,7 @@ public class CustomArrayInt : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        MapGenerator mapGenerator = (MapGenerator)target;
+        Level mapGenerator = (Level)target;
 
         if (CanCreateNewArray()) CreateNewArray(mapGenerator);
 
@@ -31,7 +31,7 @@ public class CustomArrayInt : Editor
         return editMode;
     }
 
-    void CreateNewArray(MapGenerator someClass)
+    void CreateNewArray(Level someClass)
     {
         GetDimensions();
         if (ConfirmedCanCreate()) CreateArray(someClass);
@@ -63,7 +63,7 @@ public class CustomArrayInt : Editor
         return false;
     }
 
-    void CreateArray(MapGenerator someClass)
+    void CreateArray(Level someClass)
     {
         someClass.mArray = new ArrayInt[firstDimensionSize];
         for (int i = 0; i < firstDimensionSize; i++)
@@ -72,7 +72,7 @@ public class CustomArrayInt : Editor
         }
     }
 
-    void SetupArray(MapGenerator someClass)
+    void SetupArray(Level someClass)
     {
         if (someClass.mArray != null && someClass.mArray.Length > 0)
         {
@@ -82,7 +82,7 @@ public class CustomArrayInt : Editor
 
                 for (int j = 0; j < someClass.mArray[i].Length; j++)
                 {
-                    someClass.mArray[i][j] = EditorGUILayout.IntField(someClass.mArray[i][j], GUILayout.Width(30));
+                    someClass.mArray[i][j] = EditorGUILayout.FloatField((float)someClass.mArray[i][j] , GUILayout.Width(30));
                 }
 
                 EditorGUILayout.EndHorizontal();

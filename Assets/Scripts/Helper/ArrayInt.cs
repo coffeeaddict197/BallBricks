@@ -19,7 +19,7 @@ public class Array<T>
 }
 
 [Serializable]
-public class ArrayInt : Array<int>
+public class ArrayInt : Array<float>
 {
     public ArrayInt(int size) : base(size) { }
 }

@@ -32,10 +32,10 @@ RectTransform:
   m_Father: {fileID: 6555324630851256521}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.23, y: -0.11}
-  m_SizeDelta: {x: 0.78629327, y: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -0.246, y: -0.103}
+  m_SizeDelta: {x: 0.78629327, y: 0.8048761}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2549194434899069202
 CanvasRenderer:
@@ -168,8 +168,9 @@ GameObject:
   - component: {fileID: 3311581726244617742}
   - component: {fileID: 3311581726244617743}
   - component: {fileID: -2405357469629258618}
+  - component: {fileID: 6131901452283845849}
   m_Layer: 0
-  m_Name: Triagle
+  m_Name: Triagle 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +230,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 844d202e7a8bedc4fb3d3bde7073cb1d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: debf1235805909e4c908e8932c0ef246, type: 3}
   m_Color: {r: 0.08962262, g: 0.39550766, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -254,6 +255,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _textPoint: {fileID: 5097989558782261426}
   _point: 0
+--- !u!60 &6131901452283845849
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311581726244617736}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.8, y: 0.8}
+    newSize: {x: 2.37, y: 2.24}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.34, y: 0.39999998}
+      - {x: -0.39999998, y: -0.35999998}
+      - {x: -0.39999998, y: -0.39999998}
+      - {x: 0.39999998, y: -0.39999998}
+      - {x: 0.39999998, y: 0.39999998}
 --- !u!1 &5916089664525854608
 GameObject:
   m_ObjectHideFlags: 0

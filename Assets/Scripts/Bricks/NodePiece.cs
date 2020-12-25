@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class NodePiece : MonoBehaviour
+public class NodePiece : MonoBehaviour , collisionWithBall
 {
     [SerializeField] TextMeshProUGUI _textPoint;
     [SerializeField] int _point;
@@ -53,6 +53,15 @@ public class NodePiece : MonoBehaviour
         else if (point <= 90)
         {
             sprite.color = BrickColor.c_Around80;
+        }
+    }
+
+    public void Collided()
+    {
+        Point--;
+        if(Point==0)
+        {
+            gameObject.SetActive(false);
         }
     }
 }
