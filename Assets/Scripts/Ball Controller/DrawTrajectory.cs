@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 {
-    const string DOT_TAG = "Dot";
+    public const string DOT_TAG = "Dot";
 
     [Header("Gameobjects")]
-    [SerializeField] Camera mainCamera;
+    public Camera mainCamera;
     [Space]
 
     [Header("Line drawer")]
@@ -18,13 +18,19 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 
     [SerializeField] Vector2 baseDirection;
     [SerializeField] Vector2 currentDirection;
-
     [SerializeField] float dotGap;
     [Space]
+
+    [Header("Collide manage")]
+    [SerializeField] CollideChecker collideChecker;
+    //[SerializeField] CollideChecker collideChecker = new CollideChecker();
+    [SerializeField] Vector2 collidePos = new Vector2();
+    [SerializeField] GameObject collideObject;
 
     [Header("Dot Line")]
     [SerializeField] List<GameObject> Dots;
     [SerializeField] List<DotScript> DotScripts = new List<DotScript>();
+    [Space]
 
     [Header("Flags")]
     [SerializeField] bool isCollided;
@@ -53,17 +59,18 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 
             if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved)
             {
-                DrawLine(touch);
+                SetDirection(touch);
+                DrawLine();
             }
             else if (touch.phase == TouchPhase.Ended)
             {
                 Reset();
-                if (touchPos.y > basePos.y) BallLauncher.Instance.StartFire(baseDirection);
+                if (touchPos.y > basePos.y) BallLauncher.Instance.StartFiring(baseDirection);
             }
         }
     }
 
-    private void DrawLine(Touch touch)
+    private void SetDirection(Touch touch)
     {
         isCollided = false;
 
@@ -75,43 +82,48 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
         }
 
         baseDirection = (touchPos - basePos).normalized;
-        currentDirection = baseDirection;
+
+        collideChecker.GetCollideInfo(basePos, baseDirection, ref collidePos, ref collideObject);
+    }
+
+    private void DrawLine()
+    {
+        if (!isCollided)
+        {
+            currentDirection = baseDirection;
+        }
 
         currentPos = basePos;
         for (int i = 0; i < Dots.Count; i++)
         {
             nextPos = currentPos + dotGap * currentDirection;
 
-            if (CollideChecker.Instance.IsWallCollided(nextPos))
+            if (collidePos != Vector2.zero && !isCollided)
             {
-                if (!isCollided) WallCollide();
-                else
+                if ((nextPos - basePos).sqrMagnitude >= (collidePos - basePos).sqrMagnitude)
                 {
-                    DotScripts[i].Reset();
-                    continue;
+                    Collide();
+                    isCollided = true;
+                    nextPos = currentPos + dotGap * currentDirection;
                 }
             }
-            else currentPos = nextPos;
+            else if (collideChecker.IsWallCollided(nextPos))
+            {
+                DotScripts[i].Reset();
+                continue;
+            }
+
+            currentPos = nextPos;
 
             Dots[i].transform.position = currentPos;
             Dots[i].SetActive(true);
         }
     }
 
-    public void CubeCollide()
+    public void Collide()
     {
-        CollideChecker.Instance.ChangeDirection_CubeCollided(nextPos, ref currentDirection);
-
-        nextPos = currentPos + dotGap * currentDirection;
-        isCollided = true;
-    }
-
-    public void WallCollide()
-    {
-        CollideChecker.Instance.ChangeDirection_WallCollided(nextPos, ref currentDirection);
-
-        nextPos = currentPos + dotGap * currentDirection;
-        isCollided = true;
+        CollideDirection collideDirection = collideChecker.GetCollideDirection(collidePos, collideObject, currentDirection);
+        collideChecker.ChangeDirection(collideDirection, ref currentDirection);
     }
 
     public void Reset()

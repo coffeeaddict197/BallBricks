@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class BallLauncher : MonoSingleton<BallLauncher>
 {
-    const string BALL_TAG = "Ball";
+    public const string BALL_TAG = "Ball";
 
     [Header("Balls")]
+    public Vector2 basePos;
     [SerializeField] List<GameObject> Balls;
     [SerializeField] List<BallScript> BallScripts = new List<BallScript>();
 
@@ -29,6 +30,7 @@ public class BallLauncher : MonoSingleton<BallLauncher>
 
     [Header("Events")]
     public Action<float> e_OnSpeedChange;
+    public Action e_OnReset;
 
     protected override void Awake()
     {
@@ -53,7 +55,7 @@ public class BallLauncher : MonoSingleton<BallLauncher>
         e_OnSpeedChange?.Invoke(Speed);
     }
 
-    public void StartFire(Vector2 direction)
+    public void StartFiring(Vector2 direction)
     {
         isMoving = true;
         StartCoroutine(CR_Fire(direction));
@@ -67,4 +69,6 @@ public class BallLauncher : MonoSingleton<BallLauncher>
             yield return fireInterval;
         }
     }
+
+    public void Reset() => e_OnReset?.Invoke();
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using System.Text;
 
 public enum CollideDirection
 {
@@ -11,14 +13,16 @@ public enum CollideDirection
     Bottom
 }
 
-public class CollideChecker : MonoSingleton<CollideChecker>
+public class CollideChecker : MonoBehaviour
 {
-    [SerializeField] Camera mainCamera;
-    [SerializeField] float borderOffset;
+    public const string BRICK_LAYER = "Default";
 
-    protected override void Awake()
+    private static Camera mainCamera;
+    public static float rayLength = 10f;
+
+    private void Start()
     {
-        base.Awake();
+        mainCamera = Camera.main;
     }
 
     public bool IsWallCollided(Vector2 pos)
@@ -27,38 +31,70 @@ public class CollideChecker : MonoSingleton<CollideChecker>
         return (screenPos.x > 1 || screenPos.x < 0 || screenPos.y > 1 || screenPos.y < 0);
     }
 
-    public CollideDirection GetWallCollidedDirection(Vector2 pos)
+    public void GetCollideInfo(Vector2 origin, Vector2 direction, ref Vector2 collidePos, ref GameObject collideObject)
     {
-        Vector2 screenPos = mainCamera.WorldToViewportPoint(pos);
-
-        if (screenPos.x <= 0) return CollideDirection.Left;
-        if (screenPos.x >= 1) return CollideDirection.Right;
-        if (screenPos.y >= 1) return CollideDirection.Top;
-        if (screenPos.y <= 0) return CollideDirection.Bottom;
-
-        return CollideDirection.None;
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, rayLength, LayerMask.GetMask(BRICK_LAYER));
+        if (hit.collider != null)
+        {
+            collidePos = hit.point;
+            collideObject = hit.collider.gameObject;
+        }
+        else
+        {
+            collideObject = null;
+        }
     }
 
-    public CollideDirection GetCubeCollidedDirection(Vector2 pos, GameObject cube)
+    public CollideDirection GetCollideDirection(Vector2 collidePos, GameObject collideObject, Vector2 dir)
     {
-        // ongoing
-        return CollideDirection.None;
+        if (collideObject == null) return CollideDirection.None;
+
+        CollideDirection collideDirection = CollideDirection.None;
+        Bounds bounds = collideObject.GetComponent<BoxCollider2D>().bounds;
+
+        int rightBorder = GetRoundedValue(bounds.center.x + bounds.extents.x);
+        int leftBorder = GetRoundedValue(bounds.center.x - bounds.extents.x);
+        int topBorder = GetRoundedValue(bounds.center.y + bounds.extents.y);
+        int bottomBorder = GetRoundedValue(bounds.center.y - bounds.extents.y);
+        Vector2 collidePos_rounded = new Vector2(GetRoundedValue(collidePos.x), GetRoundedValue(collidePos.y));
+
+        if ((collidePos_rounded.y >= topBorder) && (collidePos_rounded.x <= rightBorder) && (collidePos_rounded.x >= leftBorder) && (dir.y < 0))
+        {
+            collideDirection = CollideDirection.Top;
+        }
+        else
+        if ((collidePos_rounded.y <= bottomBorder) && (collidePos_rounded.x <= rightBorder) && (collidePos_rounded.x >= leftBorder) && (dir.y > 0))
+        {
+            collideDirection = CollideDirection.Bottom;
+        }
+        else
+        if ((collidePos_rounded.x >= rightBorder) && (collidePos_rounded.y <= topBorder) && (collidePos_rounded.y >= bottomBorder) && (dir.x < 0))
+        {
+            collideDirection = CollideDirection.Right;
+        }
+        else
+        if ((collidePos_rounded.x <= leftBorder) && (collidePos_rounded.y <= topBorder) && (collidePos_rounded.y >= bottomBorder) && (dir.x > 0))
+        {
+            collideDirection = CollideDirection.Left;
+        }
+
+        return collideDirection;
     }
 
-    public void ChangeDirection_WallCollided(Vector2 pos, ref Vector2 curDirection)
+    public void ChangeDirection(CollideDirection collideDirection, ref Vector2 direction)
     {
-        switch (GetWallCollidedDirection(pos))
+        switch (collideDirection)
         {
             case CollideDirection.Top:
             case CollideDirection.Bottom:
                 {
-                    curDirection.y *= -1;
+                    direction.y *= -1;
                     break;
                 }
             case CollideDirection.Left:
             case CollideDirection.Right:
                 {
-                    curDirection.x *= -1;
+                    direction.x *= -1;
                     break;
                 }
             default:
@@ -66,8 +102,8 @@ public class CollideChecker : MonoSingleton<CollideChecker>
         }
     }
 
-    public void ChangeDirection_CubeCollided(Vector2 pos, ref Vector2 curDirection)
+    public int GetRoundedValue(float value)
     {
-        // ongoing
+        return (int)(Math.Round(value, 2) * 100);
     }
 }

@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// test only
-public interface ICollideWithCube
-{
-    void Collide();
-}
-
 public class BallScript : MonoBehaviour, ICollideWithCube
 {
     [Header("Component")]
@@ -20,24 +14,38 @@ public class BallScript : MonoBehaviour, ICollideWithCube
     [SerializeField] Vector2 direction;
     [SerializeField] float speed;
 
+    [Header("Collide manage")]
+    [SerializeField] Vector2 collidePos;
+    [SerializeField] GameObject collideObject;
+    [SerializeField] CollideChecker collideChecker;
+
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        collideChecker = GetComponent<CollideChecker>();
+
         speed = BallLauncher.Instance.Speed;
         BallLauncher.Instance.e_OnSpeedChange += ChangeSpeed;
+        BallLauncher.Instance.e_OnReset += Reset;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (isMoving)
+        if (isMoving && rigid.velocity == Vector2.zero)
         {
-            rigid.MovePosition(new Vector2(
-                transform.position.x + direction.x * speed * Time.deltaTime,
-                transform.position.y + direction.y * speed * Time.deltaTime)
-            );
+            rigid.velocity = direction * speed;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        collidePos = collision.GetContact(0).point;
+        collideObject = collision.collider.gameObject;
+
+        transform.position = new Vector2(transform.position.x - direction.x / 10, transform.position.y - direction.y / 10);
+        //Debug.Log(collidePos.x + " " + collidePos.y, collision.collider.gameObject);
+        Collide();
     }
 
     public void Fire(Vector2 dir)
@@ -48,13 +56,19 @@ public class BallScript : MonoBehaviour, ICollideWithCube
 
     public void ChangeSpeed(float spd) => speed = spd;
 
-    public void Stop()
-    {
+    public void Stop() => isMoving = false;
 
+    public void Reset()
+    {
+        transform.position = BallLauncher.Instance.basePos;
+        isMoving = false;
     }
 
     public void Collide()
     {
+        CollideDirection collideDirection = collideChecker.GetCollideDirection(collidePos, collideObject, direction);
+        collideChecker.ChangeDirection(collideDirection, ref direction);
 
+        rigid.velocity = direction * speed;
     }
 }
