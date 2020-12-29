@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-
-public interface ICollideWithCube
+﻿public interface ICollideWithCube
 {
-    //void Collide(Vector2 collidePos, GameObject collideObject);
     void Collide();
 }

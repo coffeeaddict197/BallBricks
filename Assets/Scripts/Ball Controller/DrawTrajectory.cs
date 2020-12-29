@@ -23,22 +23,21 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 
     [Header("Collide manage")]
     [SerializeField] CollideChecker collideChecker;
-    //[SerializeField] CollideChecker collideChecker = new CollideChecker();
     [SerializeField] Vector2 collidePos = new Vector2();
     [SerializeField] GameObject collideObject;
 
-    [Header("Dot Line")]
+    [Header("Dots")]
     [SerializeField] List<GameObject> Dots;
     [SerializeField] List<DotScript> DotScripts = new List<DotScript>();
-    [Space]
+    //[Space]
 
-    [Header("Flags")]
-    [SerializeField] bool isCollided;
+    //[Header("Flags")]
+    //[SerializeField] bool isCollided;
 
     // Start is called before the first frame update
     void Start()
     {
-        isCollided = false;
+        //isCollided = false;
 
         for (int i = 0; i < Dots.Count; i++)
         {
@@ -72,8 +71,6 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 
     private void SetDirection(Touch touch)
     {
-        isCollided = false;
-
         touchPos = mainCamera.ScreenToWorldPoint(touch.position);
         if (touchPos.y < basePos.y)
         {
@@ -88,22 +85,19 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 
     private void DrawLine()
     {
-        if (!isCollided)
-        {
-            currentDirection = baseDirection;
-        }
+        //if (!isCollided) currentDirection = baseDirection;
+        currentDirection = baseDirection;
 
         currentPos = basePos;
         for (int i = 0; i < Dots.Count; i++)
         {
             nextPos = currentPos + dotGap * currentDirection;
 
-            if (collidePos != Vector2.zero && !isCollided)
+            if (collidePos != Vector2.zero)
             {
                 if ((nextPos - basePos).sqrMagnitude >= (collidePos - basePos).sqrMagnitude)
                 {
                     Collide();
-                    isCollided = true;
                     nextPos = currentPos + dotGap * currentDirection;
                 }
             }

@@ -32,9 +32,10 @@ public class BallScript : MonoBehaviour, ICollideWithCube
 
     void FixedUpdate()
     {
-        if (isMoving && rigid.velocity == Vector2.zero)
+        if (isMoving)
         {
-            rigid.velocity = direction * speed;
+            if (rigid.velocity == Vector2.zero) rigid.velocity = direction * speed;
+            else if (transform.position.y < BallLauncher.Instance.basePos.y - BallLauncher.Instance.basePosOffset) Stop();
         }
     }
 
@@ -44,7 +45,6 @@ public class BallScript : MonoBehaviour, ICollideWithCube
         collideObject = collision.collider.gameObject;
 
         transform.position = new Vector2(transform.position.x - direction.x / 10, transform.position.y - direction.y / 10);
-        //Debug.Log(collidePos.x + " " + collidePos.y, collision.collider.gameObject);
         Collide();
     }
 
@@ -56,7 +56,12 @@ public class BallScript : MonoBehaviour, ICollideWithCube
 
     public void ChangeSpeed(float spd) => speed = spd;
 
-    public void Stop() => isMoving = false;
+    public void Stop()
+    {
+        BallLauncher.Instance.ReturnedBallsCounter++;
+        rigid.velocity = Vector2.zero;
+        isMoving = false;
+    }
 
     public void Reset()
     {
@@ -68,6 +73,7 @@ public class BallScript : MonoBehaviour, ICollideWithCube
     {
         CollideDirection collideDirection = collideChecker.GetCollideDirection(collidePos, collideObject, direction);
         collideChecker.ChangeDirection(collideDirection, ref direction);
+        transform.position = new Vector2(transform.position.x + direction.x / 10, transform.position.y + direction.y / 10);
 
         rigid.velocity = direction * speed;
     }
