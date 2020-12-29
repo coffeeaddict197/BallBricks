@@ -87,6 +87,7 @@ public class NodePiece : MonoBehaviour
     {
         _originPos = pos;
         transform.position = new Vector3(_originPos.x, transform.position.y + 10f);
+        transform.DOKill();
         transform.DOMove(_originPos, 0.5f).SetEase(Ease.OutBack);
         
     }
