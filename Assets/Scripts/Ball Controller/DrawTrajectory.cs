@@ -76,12 +76,14 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
         baseDirection = (touchPos - basePos).normalized;
 
         RaycastHit2D hit = Physics2D.Raycast(basePos, baseDirection, 10f, LayerMask.GetMask(BRICK_LAYER));
+        Debug.DrawRay(basePos, baseDirection * 10, Color.red);
         if (hit.collider != null)
         {
             collidePos = hit.point;
             Vector2 inNormal = hit.normal;
             newDirection = Vector2.Reflect(baseDirection, inNormal);
         }
+        else collidePos = Vector2.zero;
     }
 
     private void DrawLine()

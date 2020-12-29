@@ -80,6 +80,15 @@ public class BallLauncher : MonoSingleton<BallLauncher>
         StartCoroutine(CR_Fire(direction));
     }
 
+    public void IncreaseBall()
+    {
+        var newBall = ObjectPool.Instance.Spawn(BALL_TAG);
+        newBall.transform.position = basePos;
+        newBall.SetActive(true);
+        Balls.Add(newBall);
+        BallScripts.Add(newBall.GetComponent<BallScript>());
+    }
+
     IEnumerator CR_Fire(Vector2 direction)
     {
         for (int i = 0; i < BallScripts.Count; i++)

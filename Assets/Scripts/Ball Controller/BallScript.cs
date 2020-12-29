@@ -39,12 +39,28 @@ public class BallScript : MonoBehaviour, ICollideWithCube
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        var check = collision.GetComponent<ICollisionWithBall>();
+        if (check != null)
+        {
+            check.Collided();
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 inDirection = rigid.velocity;
         Vector2 inNormal = collision.contacts[0].normal;
         Vector2 newVelocity = Vector2.Reflect(inDirection, inNormal);
+        transform.position = new Vector2(transform.position.x - direction.x / 10, transform.position.y - direction.y / 10);
         rigid.velocity = newVelocity;
+
+        var check = collision.collider.GetComponent<ICollisionWithBall>();
+        if (check != null)
+        {
+            check.Collided();
+        }
     }
 
     public void Fire(Vector2 dir)

@@ -18,7 +18,6 @@ public class Inscrease : NodePiece , ICollisionWithBall
 
     public void Collided()
     {
-        Debug.Log("Ball number inscre");
     }
 
 }
