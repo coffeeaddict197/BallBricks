@@ -36,15 +36,7 @@ public class MapGenerator : MonoSingleton<MapGenerator>
     private void Start()
     {
         numOfWidth = LevelManager.Instance.withMatrix;
-    }
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GenerateLevel(1);
-        }
+        GenerateLevel(1);
 
     }
 
