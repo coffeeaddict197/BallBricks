@@ -51,7 +51,7 @@ public class CollideChecker : MonoBehaviour
         if (collideObject == null) return CollideDirection.None;
 
         CollideDirection collideDirection;
-        Bounds bounds = collideObject.GetComponent<BoxCollider2D>().bounds;
+        Bounds bounds = collideObject.GetComponent<Collider2D>().bounds;
 
         int rightBorder = GetRoundedValue(bounds.center.x + bounds.extents.x);
         int leftBorder = GetRoundedValue(bounds.center.x - bounds.extents.x);

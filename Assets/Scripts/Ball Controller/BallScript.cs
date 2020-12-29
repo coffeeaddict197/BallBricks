@@ -41,11 +41,10 @@ public class BallScript : MonoBehaviour, ICollideWithCube
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        collidePos = collision.GetContact(0).point;
-        collideObject = collision.collider.gameObject;
-
-        transform.position = new Vector2(transform.position.x - direction.x / 10, transform.position.y - direction.y / 10);
-        Collide();
+        Vector2 inDirection = rigid.velocity;
+        Vector2 inNormal = collision.contacts[0].normal;
+        Vector2 newVelocity = Vector2.Reflect(inDirection, inNormal);
+        rigid.velocity = newVelocity;
     }
 
     public void Fire(Vector2 dir)

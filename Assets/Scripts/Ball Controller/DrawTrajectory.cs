@@ -5,6 +5,7 @@ using UnityEngine;
 public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 {
     public const string DOT_TAG = "Dot";
+    public const string BRICK_LAYER = "Default";
 
     [Header("Gameobjects")]
     public Camera mainCamera;
@@ -18,6 +19,7 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 
     [SerializeField] Vector2 baseDirection;
     [SerializeField] Vector2 currentDirection;
+    [SerializeField] Vector2 newDirection;
     [SerializeField] float dotGap;
     [Space]
 
@@ -29,16 +31,9 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     [Header("Dots")]
     [SerializeField] List<GameObject> Dots;
     [SerializeField] List<DotScript> DotScripts = new List<DotScript>();
-    //[Space]
 
-    //[Header("Flags")]
-    //[SerializeField] bool isCollided;
-
-    // Start is called before the first frame update
     void Start()
     {
-        //isCollided = false;
-
         for (int i = 0; i < Dots.Count; i++)
         {
             Dots[i] = ObjectPool.Instance.Spawn(DOT_TAG);
@@ -80,12 +75,17 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 
         baseDirection = (touchPos - basePos).normalized;
 
-        collideChecker.GetCollideInfo(basePos, baseDirection, ref collidePos, ref collideObject);
+        RaycastHit2D hit = Physics2D.Raycast(basePos, baseDirection, 10f, LayerMask.GetMask(BRICK_LAYER));
+        if (hit.collider != null)
+        {
+            collidePos = hit.point;
+            Vector2 inNormal = hit.normal;
+            newDirection = Vector2.Reflect(baseDirection, inNormal);
+        }
     }
 
     private void DrawLine()
     {
-        //if (!isCollided) currentDirection = baseDirection;
         currentDirection = baseDirection;
 
         currentPos = basePos;
@@ -97,7 +97,7 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
             {
                 if ((nextPos - basePos).sqrMagnitude >= (collidePos - basePos).sqrMagnitude)
                 {
-                    Collide();
+                    currentDirection = newDirection;
                     nextPos = currentPos + dotGap * currentDirection;
                 }
             }

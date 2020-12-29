@@ -62,6 +62,7 @@ public class BallLauncher : MonoSingleton<BallLauncher>
         for (int i = 0; i < Balls.Count; i++)
         {
             Balls[i] = ObjectPool.Instance.Spawn(BALL_TAG);
+            Balls[i].transform.position = basePos;
             Balls[i].SetActive(true);
             BallScripts.Add(Balls[i].GetComponent<BallScript>());
         }
