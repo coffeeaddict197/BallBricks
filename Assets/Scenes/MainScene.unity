@@ -1177,7 +1177,7 @@ MonoBehaviour:
   nextPos: {x: 0, y: 0}
   baseDirection: {x: 0, y: 0}
   currentDirection: {x: 0, y: 0}
-  dotGap: 0.15
+  dotGap: 0.2
   collideChecker: {fileID: 851269153}
   collidePos: {x: 0, y: 0}
   collideObject: {fileID: 0}
@@ -1334,7 +1334,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1097627359}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.01, z: 0}
+  m_LocalPosition: {x: 0, y: 8.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 344389063}
@@ -1807,8 +1807,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   BallScripts: []
-  basePosOffset: 0.1
+  basePosOffset: 0
   _speed: 10
   intervalTime: 0.06
   isMoving: 0
