@@ -13,12 +13,16 @@ public class BallTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            LevelManager.Instance.currentLevel.DownLine();
+            Debug.Log(LevelManager.Instance.currentLevel.step);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var check = collision.gameObject.GetComponent<collisionWithBall>();
+        var check = collision.gameObject.GetComponent<ICollisionWithBall>();
         if(check!=null)
         {
             check.Collided();

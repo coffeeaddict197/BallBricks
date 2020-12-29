@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class Brick : NodePiece
+public class Brick : NodePiece , ICollisionWithBall
 {
     new void Awake()
     {
         base.Awake();
     }
 
-
-    private void Update()
+    public void Collided()
     {
-        if(Input.GetKey(KeyCode.A))
+        Point--;
+        if (Point == 0)
         {
-            Point--;
+            LevelManager.Instance.currentLevel.countBlock--;
+            LevelManager.Instance.currentLevel.allNode.Remove(this);
+            gameObject.SetActive(false);
         }
     }
+
+
 }

@@ -45,6 +45,7 @@ public class ObjectPool : MonoSingleton<ObjectPool>
                 {
                     if (!pooledGobjects[i].activeSelf)
                     {
+                        pooledGobjects[i].SetActive(true);
                         return pooledGobjects[i];
                     }
                 }
