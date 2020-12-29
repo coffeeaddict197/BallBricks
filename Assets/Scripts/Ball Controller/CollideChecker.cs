@@ -17,6 +17,7 @@ public class CollideChecker : MonoBehaviour
 {
     public const string BRICK_LAYER = "Default";
 
+    // static variables
     private static Camera mainCamera;
     public static float rayLength = 10f;
 
@@ -49,7 +50,7 @@ public class CollideChecker : MonoBehaviour
     {
         if (collideObject == null) return CollideDirection.None;
 
-        CollideDirection collideDirection = CollideDirection.None;
+        CollideDirection collideDirection;
         Bounds bounds = collideObject.GetComponent<BoxCollider2D>().bounds;
 
         int rightBorder = GetRoundedValue(bounds.center.x + bounds.extents.x);
@@ -57,6 +58,15 @@ public class CollideChecker : MonoBehaviour
         int topBorder = GetRoundedValue(bounds.center.y + bounds.extents.y);
         int bottomBorder = GetRoundedValue(bounds.center.y - bounds.extents.y);
         Vector2 collidePos_rounded = new Vector2(GetRoundedValue(collidePos.x), GetRoundedValue(collidePos.y));
+
+        collideDirection = GetDirection(collidePos_rounded, topBorder, rightBorder, leftBorder, bottomBorder, dir);
+
+        return collideDirection;
+    }
+
+    private CollideDirection GetDirection(Vector2 collidePos_rounded, int topBorder, int rightBorder, int leftBorder, int bottomBorder, Vector2 dir)
+    {
+        CollideDirection collideDirection = CollideDirection.None;
 
         if ((collidePos_rounded.y >= topBorder) && (collidePos_rounded.x <= rightBorder) && (collidePos_rounded.x >= leftBorder) && (dir.y < 0))
         {

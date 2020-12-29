@@ -7,21 +7,37 @@ public class BallLauncher : MonoSingleton<BallLauncher>
 {
     public const string BALL_TAG = "Ball";
 
-    [Header("Balls")]
+    [Header("Ball control")]
     public Vector2 basePos;
+
+    [SerializeField] int _returnedBallsCounter;
+    public int ReturnedBallsCounter
+    {
+        get { return _returnedBallsCounter; }
+        set
+        {
+            _returnedBallsCounter = value;
+            if (value == Balls.Count && isMoving) Reset();
+        }
+    }
+
     [SerializeField] List<GameObject> Balls;
     [SerializeField] List<BallScript> BallScripts = new List<BallScript>();
 
     [Header("Moving control")]
+    [Range(0.1f, 0.3f)]
+    public float basePosOffset;
     [SerializeField] float _speed;
     public float Speed
     {
         get { return _speed; }
-        set { 
+        set
+        {
             _speed = value;
             e_OnSpeedChange?.Invoke(value);
         }
     }
+
     [SerializeField] float intervalTime;
     [SerializeField] WaitForSeconds fireInterval;
 
@@ -40,6 +56,8 @@ public class BallLauncher : MonoSingleton<BallLauncher>
     void Start()
     {
         isMoving = false;
+        basePos = transform.position;
+        ReturnedBallsCounter = Balls.Count;
 
         for (int i = 0; i < Balls.Count; i++)
         {
@@ -66,9 +84,15 @@ public class BallLauncher : MonoSingleton<BallLauncher>
         for (int i = 0; i < BallScripts.Count; i++)
         {
             BallScripts[i].Fire(direction);
+            ReturnedBallsCounter--;
             yield return fireInterval;
         }
     }
 
-    public void Reset() => e_OnReset?.Invoke();
+    public void Reset()
+    {
+        isMoving = false;
+        ReturnedBallsCounter = Balls.Count;
+        e_OnReset?.Invoke();
+    }
 }

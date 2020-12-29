@@ -1073,7 +1073,7 @@ MonoBehaviour:
   nextPos: {x: 0, y: 0}
   baseDirection: {x: 0, y: 0}
   currentDirection: {x: 0, y: 0}
-  dotGap: 0.2
+  dotGap: 0.15
   collideChecker: {fileID: 851269153}
   collidePos: {x: 0, y: 0}
   collideObject: {fileID: 0}
@@ -1179,7 +1179,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   DotScripts: []
-  isCollided: 0
 --- !u!4 &851269152
 Transform:
   m_ObjectHideFlags: 0
@@ -1577,6 +1576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basePos: {x: 0, y: 0}
+  _returnedBallsCounter: 0
   Balls:
   - {fileID: 0}
   - {fileID: 0}
@@ -1628,17 +1628,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   BallScripts: []
+  basePosOffset: 0.1
   _speed: 10
   intervalTime: 0.06
   isMoving: 0
