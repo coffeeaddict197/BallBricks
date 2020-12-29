@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class NodePiece : MonoBehaviour , collisionWithBall
+using DG.Tweening;
+public class NodePiece : MonoBehaviour
 {
+
+    [Header("Node Properties")]
     [SerializeField] TextMeshProUGUI _textPoint;
     [SerializeField] int _point;
     protected SpriteRenderer sprite;
-
+    private Vector3 _originPos;
     public int Point
     {
         get => _point;
@@ -23,45 +26,68 @@ public class NodePiece : MonoBehaviour , collisionWithBall
     public void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
-
         Point = _point;
     }
 
-
     private void CheckToChangeColor(int point)
     {
-        if(point>=20 && point<=35)
+        if(point >= 10 && point<20)
+        {
+            sprite.color = BrickColor.c_Around10;
+        }
+        else if(point<=20)
         {
             sprite.color = BrickColor.c_Around20;
         }
-        else if(point <= 50)
+        else if(point <= 30)
         {
-            sprite.color = BrickColor.c_Around35;
+            sprite.color = BrickColor.c_Around30;
         }
-        else if(point <= 60)
+        else if(point <= 40)
+        {
+            sprite.color = BrickColor.c_Around40;
+        }
+        else if(point <= 50)
         {
             sprite.color = BrickColor.c_Around50;
         }
-        else if(point <= 70)
+        else if(point <= 60)
         {
             sprite.color = BrickColor.c_Around60;
         }
-        else if(point <= 80)
+        else if(point <= 70)
         {
             sprite.color = BrickColor.c_Around70;
         }
-        else if (point <= 90)
+        else if (point <= 80)
         {
             sprite.color = BrickColor.c_Around80;
         }
+        else
+        {
+            sprite.color = BrickColor.c_Default;
+        }
+
     }
 
-    public void Collided()
+   
+
+    public void DownLine()
     {
-        Point--;
-        if(Point==0)
-        {
-            gameObject.SetActive(false);
-        }
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y - transform.localScale.y , 0f);
+        transform.DOMove(newPos, 0.3f).SetUpdate(false).SetEase(Ease.OutBack);
+    }
+
+
+    public void SetLocalScale(Vector3 localScale)
+    {
+        transform.localScale = localScale;
+    }
+    public void SetPosion(Vector3 pos)
+    {
+        _originPos = pos;
+        transform.position = new Vector3(_originPos.x, transform.position.y + 10f);
+        transform.DOMove(_originPos, 0.5f).SetEase(Ease.OutBack);
+        
     }
 }

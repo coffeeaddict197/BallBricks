@@ -6,6 +6,15 @@ TagManager:
   tags:
   - Dot
   - Ball
+  - Triagle 1
+  - Triagle 2
+  - Triagle 3
+  - Triagle 4
+  - Brick
+  - Inscre
+  - Effect Horizontal
+  - Effect2D
+  - Effect Verticle
   layers:
   - Default
   - TransparentFX

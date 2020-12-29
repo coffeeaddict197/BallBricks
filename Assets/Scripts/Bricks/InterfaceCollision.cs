@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface collisionWithBall
+public interface ICollisionWithBall
 {
     void Collided();
 }

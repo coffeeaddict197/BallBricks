@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 6131901452283845849}
   m_Layer: 0
   m_Name: Triagle 4
-  m_TagString: Untagged
+  m_TagString: Triagle 4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
