@@ -18,7 +18,7 @@ public class Inscrease : NodePiece , ICollisionWithBall
 
     public void Collided()
     {
-        BallLauncher.Instance.IncreaseBall();
+        
     }
 
 }
