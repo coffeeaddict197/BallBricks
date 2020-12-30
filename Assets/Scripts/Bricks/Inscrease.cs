@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Inscrease : NodePiece , ICollisionWithBall
 {
+    private void Awake()
+    {
+        //Do nothing
+    }
     public void Collided()
     {
         BallLauncher.Instance.IncreaseBall();
