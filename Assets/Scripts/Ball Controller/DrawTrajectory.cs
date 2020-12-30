@@ -16,17 +16,17 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     [SerializeField] Vector2 basePos;
     [SerializeField] Vector2 currentPos;
     [SerializeField] Vector2 nextPos;
-
+    [Space]
     [SerializeField] Vector2 baseDirection;
     [SerializeField] Vector2 currentDirection;
     [SerializeField] Vector2 newDirection;
+    [Space]
+    [SerializeField] float lowerHeightLimit;
     [SerializeField] float dotGap;
     [Space]
 
     [Header("Collide manage")]
-    [SerializeField] CollideChecker collideChecker;
     [SerializeField] Vector2 collidePos = new Vector2();
-    [SerializeField] GameObject collideObject;
 
     [Header("Dots")]
     [SerializeField] List<GameObject> Dots;
@@ -34,6 +34,9 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 
     void Start()
     {
+        BallLauncher.Instance.e_OnBasePosChange += ChangeBasePos;
+        basePos = BallLauncher.Instance.BasePos;
+        mainCamera = Camera.main;
         for (int i = 0; i < Dots.Count; i++)
         {
             Dots[i] = ObjectPool.Instance.Spawn(DOT_TAG);
@@ -45,28 +48,33 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     // Update is called once per frame
     void Update()
     {
-        if (BallLauncher.Instance.isMoving) return;
-
-        if (Input.touchCount == 1)
+        if (BallLauncher.Instance.isMoving)
         {
-            var touch = Input.GetTouch(0);
+            if (Input.GetMouseButtonDown(1))
+            {
+                BallLauncher.Instance.RetrieveAll();
+            }
+            return;
+        }
 
-            if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved)
+        if (Input.GetMouseButton(0))
+        {
+            var touchPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            if ((touchPos.y - basePos.y) >= lowerHeightLimit)
             {
-                SetDirection(touch);
-                DrawLine();
+                SetDirection(touchPos);
             }
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                Reset();
-                if (touchPos.y > basePos.y) BallLauncher.Instance.StartFiring(baseDirection);
-            }
+            DrawLine();
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            Reset();
+            if (touchPos.y > basePos.y) { BallLauncher.Instance.StartFiring(baseDirection); }
         }
     }
 
-    private void SetDirection(Touch touch)
+    private void SetDirection(Vector2 touchPos)
     {
-        touchPos = mainCamera.ScreenToWorldPoint(touch.position);
         if (touchPos.y < basePos.y)
         {
             Reset();
@@ -76,14 +84,13 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
         baseDirection = (touchPos - basePos).normalized;
 
         RaycastHit2D hit = Physics2D.Raycast(basePos, baseDirection, 10f, LayerMask.GetMask(BRICK_LAYER));
-        Debug.DrawRay(basePos, baseDirection * 10, Color.red);
         if (hit.collider != null)
         {
             collidePos = hit.point;
             Vector2 inNormal = hit.normal;
             newDirection = Vector2.Reflect(baseDirection, inNormal);
         }
-        else collidePos = Vector2.zero;
+        else collidePos = basePos;
     }
 
     private void DrawLine()
@@ -102,11 +109,11 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
                     currentDirection = newDirection;
                     nextPos = currentPos + dotGap * currentDirection;
                 }
-            }
-            else if (collideChecker.IsWallCollided(nextPos))
-            {
-                DotScripts[i].Reset();
-                continue;
+                if (IsWallCollided(nextPos))
+                {
+                    DotScripts[i].Reset();
+                    continue;
+                }
             }
 
             currentPos = nextPos;
@@ -116,11 +123,7 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
         }
     }
 
-    public void Collide()
-    {
-        CollideDirection collideDirection = collideChecker.GetCollideDirection(collidePos, collideObject, currentDirection);
-        collideChecker.ChangeDirection(collideDirection, ref currentDirection);
-    }
+    public void ChangeBasePos(Vector2 pos) => basePos = pos;
 
     public void Reset()
     {
@@ -128,5 +131,11 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
         {
             Dots[i].transform.position = basePos;
         }
+    }
+
+    public bool IsWallCollided(Vector2 pos)
+    {
+        Vector2 screenPos = mainCamera.WorldToViewportPoint(pos);
+        return (screenPos.x > 1 || screenPos.x < 0 || screenPos.y > 1 || screenPos.y < 0);
     }
 }

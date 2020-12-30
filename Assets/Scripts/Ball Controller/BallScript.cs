@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using DG.Tweening;
 
-public class BallScript : MonoBehaviour, ICollideWithCube
+public class BallScript : MonoBehaviour
 {
     [Header("Component")]
     [SerializeField] Rigidbody2D rigid;
+    [SerializeField] Collider2D col;
 
     [Header("Flag")]
     [SerializeField] bool isMoving;
@@ -17,16 +17,16 @@ public class BallScript : MonoBehaviour, ICollideWithCube
     [Header("Collide manage")]
     [SerializeField] Vector2 collidePos;
     [SerializeField] GameObject collideObject;
-    [SerializeField] CollideChecker collideChecker;
 
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        collideChecker = GetComponent<CollideChecker>();
+        col = GetComponent<Collider2D>();
 
         speed = BallLauncher.Instance.Speed;
         BallLauncher.Instance.e_OnSpeedChange += ChangeSpeed;
+        BallLauncher.Instance.e_OnRetrieveAll += Retrieve;
         BallLauncher.Instance.e_OnReset += Reset;
     }
 
@@ -35,7 +35,7 @@ public class BallScript : MonoBehaviour, ICollideWithCube
         if (isMoving)
         {
             if (rigid.velocity == Vector2.zero) rigid.velocity = direction * speed;
-            else if (transform.position.y < BallLauncher.Instance.basePos.y - BallLauncher.Instance.basePosOffset) Stop();
+            else if (transform.position.y < BallLauncher.Instance.BasePos.y - BallLauncher.Instance.basePosOffset) Stop();
         }
     }
 
@@ -73,23 +73,34 @@ public class BallScript : MonoBehaviour, ICollideWithCube
 
     public void Stop()
     {
+        if (!BallLauncher.Instance.isBasePosChanged)
+        {
+            BallLauncher.Instance.isBasePosChanged = true;
+            BallLauncher.Instance.newBasePos = new Vector2(transform.position.x, BallLauncher.Instance.BasePos.y);
+        }
+
         BallLauncher.Instance.ReturnedBallsCounter++;
         rigid.velocity = Vector2.zero;
+        transform.position = new Vector2(transform.position.x, BallLauncher.Instance.BasePos.y);
         isMoving = false;
+    }
+
+    public void Retrieve()
+    {
+        if (isMoving) isMoving = false; else return;
+        col.enabled = false;
+        rigid.velocity = Vector2.zero;
+
+        transform.DOKill();
+        transform.DOMoveY(BallLauncher.Instance.BasePos.y - BallLauncher.Instance.basePosOffset, BallLauncher.Instance.moveTime).OnComplete(Stop);
     }
 
     public void Reset()
     {
-        transform.position = BallLauncher.Instance.basePos;
+        col.enabled = true;
+        transform.DOKill();
+        transform.DOMove(BallLauncher.Instance.BasePos, BallLauncher.Instance.moveTime);
+        rigid.velocity = Vector2.zero;
         isMoving = false;
-    }
-
-    public void Collide()
-    {
-        CollideDirection collideDirection = collideChecker.GetCollideDirection(collidePos, collideObject, direction);
-        collideChecker.ChangeDirection(collideDirection, ref direction);
-        transform.position = new Vector2(transform.position.x + direction.x / 10, transform.position.y + direction.y / 10);
-
-        rigid.velocity = direction * speed;
     }
 }
