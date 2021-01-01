@@ -1511,4 +1511,9 @@ MonoBehaviour:
     count: 20
     expandable: 0
     firstIndex: 0
+  - gameObject: {fileID: 4616475552653005694, guid: 31a0dd8533bbb7e48ac2a7e41c04ea2e,
+      type: 3}
+    count: 20
+    expandable: 0
+    firstIndex: 0
   pooledGobjects: []

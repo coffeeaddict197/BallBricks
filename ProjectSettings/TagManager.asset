@@ -15,6 +15,10 @@ TagManager:
   - Effect Horizontal
   - Effect2D
   - Effect Verticle
+  - Breaker
+  - LineSetup
+  - VerticleLine
+  - HorizontalLine
   layers:
   - Default
   - TransparentFX
@@ -25,8 +29,8 @@ TagManager:
   - 
   - 
   - Ball
-  - 
-  - 
+  - Effect
+  - TopGamePanel
   - 
   - 
   - 
@@ -51,4 +55,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: TopGamePanel
+    uniqueID: 2072893975
+    locked: 0
+  - name: New Layer
+    uniqueID: 3755096319
     locked: 0

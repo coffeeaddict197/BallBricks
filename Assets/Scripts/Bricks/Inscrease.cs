@@ -8,7 +8,7 @@ public class Inscrease : NodePiece , ICollisionWithBall
     {
         //Do nothing
     }
-    public void Collided()
+    public override void Collided()
     {
         BallLauncher.Instance.IncreaseBall();
         gameObject.SetActive(false);

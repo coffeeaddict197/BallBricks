@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
-public class NodePiece : MonoBehaviour
+public class NodePiece : MonoBehaviour , ICollisionWithBall
 {
 
     [Header("Node Properties")]
@@ -89,6 +89,23 @@ public class NodePiece : MonoBehaviour
         transform.position = new Vector3(_originPos.x, transform.position.y + 10f);
         transform.DOKill();
         transform.DOMove(_originPos, 0.5f).SetEase(Ease.OutBack);
-        
     }
+
+    public virtual void Collided()
+    {
+        Point--;
+        if (Point == 0)
+        {
+            LevelManager.Instance.currentLevel.countBlock--;
+            SpawnBreaker();
+            gameObject.SetActive(false);
+        }
+    }
+
+    void SpawnBreaker()
+    {
+        GameObject breaker = ObjectPool.Instance.Spawn(MyTags.BREAKER);
+        breaker.transform.position = transform.position;
+    }
+
 }

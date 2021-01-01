@@ -17,8 +17,15 @@ public class Level : MonoBehaviour
     [SerializeField] int RateEffect;
 
 
+    [HideInInspector]
+    //tick the node (example effect2d , effect verticle , ...) will be destroy when launching end 
+    public List<NodePiece> tickNode;
+
+
+
     private void Awake()
     {
+        tickNode = new List<NodePiece>();
         allNode = new List<NodePiece>();
     }
     private void Start()
@@ -27,20 +34,19 @@ public class Level : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.F))
-            DownLine();
-    }
-
     public void DownLine()
     {
+        UnactiveAllTickNode();
+
         foreach (NodePiece node in allNode)
             node.DownLine();
 
         RandomFirstRowMatrix(mArray);
+        //Add new to list
         allNode.AddRange(MapGenerator.Instance.GenerateNewLineBlock(this));
         step++;
+        GameManager.Instance.Step = step;
+        
     }
 
 
@@ -143,6 +149,17 @@ public class Level : MonoBehaviour
             Debug.Log(1 + (float)f / 10);
 
 
+        }
+    }
+
+    void UnactiveAllTickNode()
+    {
+        if(tickNode.Count!=0)
+        {
+            foreach (NodePiece node in tickNode)
+            {
+                node.transform.gameObject.SetActive(false);
+            }
         }
     }
 

@@ -65,6 +65,38 @@ public class ObjectPool : MonoSingleton<ObjectPool>
         return null;
     }
 
+
+    public GameObject Spawn(string tag , Vector3 pos)
+    {
+        foreach (var item in preAllocations)
+        {
+            if (item.gameObject.CompareTag(tag))
+            {
+                for (int i = item.firstIndex; i < item.firstIndex + item.count; ++i)
+                {
+                    if (!pooledGobjects[i].activeSelf)
+                    {
+                        pooledGobjects[i].SetActive(true);
+                        pooledGobjects[i].transform.position = pos;
+                        return pooledGobjects[i];
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < preAllocations.Count; ++i)
+        {
+            if (pooledGobjects[i].gameObject.tag.Equals(tag))
+                if (preAllocations[i].expandable)
+                {
+                    GameObject obj = CreateGobject(preAllocations[i].gameObject);
+                    pooledGobjects.Add(obj);
+                    return obj;
+                }
+        }
+        return null;
+    }
+
     GameObject CreateGobject(GameObject item)
     {
         GameObject gobject = Instantiate(item, transform);

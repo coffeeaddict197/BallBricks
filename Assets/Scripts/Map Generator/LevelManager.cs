@@ -28,11 +28,11 @@ public class LevelManager : MonoSingleton<LevelManager>
     public int withMatrix;
 
 
-
     private new void Awake()
     {
         currentLevel = null;
         allLevel = GetComponents<Level>();
+        
     }
 
 

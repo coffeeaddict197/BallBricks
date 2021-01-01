@@ -13,6 +13,10 @@ public static class MyTags
     public const string EFFECT_HORIZONTAL = "Effect Horizontal";
     public const string EFFECT_2D = "Effect2D";
     public const string EFFECT_VERTICLE = "Effect Verticle";
+    public const string HorizontalLine = "HorizontalLine";
+    public const string VerticleLine = "VerticleLine";
+
+    public const string BREAKER = "Breaker";
 
 
 }
