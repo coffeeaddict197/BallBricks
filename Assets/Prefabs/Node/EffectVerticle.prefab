@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7822659247777086268}
   - component: {fileID: 7822659247777086269}
   - component: {fileID: 1121278272171097111}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EffectVerticle
   m_TagString: Effect Verticle
   m_Icon: {fileID: 0}
@@ -98,6 +98,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _textPoint: {fileID: 0}
   _point: 0
+  lineHorizontal: {fileID: 0}
+  lineVerticle: {fileID: 0}
+  layer:
+    serializedVersion: 2
+    m_Bits: 513
 --- !u!58 &7822659247777086269
 CircleCollider2D:
   m_ObjectHideFlags: 0

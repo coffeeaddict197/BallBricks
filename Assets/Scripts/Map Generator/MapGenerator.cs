@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class MapGenerator : MonoSingleton<MapGenerator>
 {
+#pragma warning disable
 
     Camera cam;
     [SerializeField] GameObject parentBricks;
@@ -28,9 +30,9 @@ public class MapGenerator : MonoSingleton<MapGenerator>
 
     private new void Awake()
     {
-        cam = Camera.main;
-        _leftPointGenerate = cam.TopLeftPoint();
-        _rightPointGenerate = cam.TopRightPoint();
+
+
+        Initialize();
     }
 
     private void Start()
@@ -38,6 +40,15 @@ public class MapGenerator : MonoSingleton<MapGenerator>
         numOfWidth = LevelManager.Instance.withMatrix;
         GenerateLevel(1);
 
+    }
+
+
+    void Initialize()
+    {
+        cam = Camera.main;
+        GameObject objLine = GameObject.FindGameObjectWithTag("LineSetup");
+        _leftPointGenerate = new Vector2(cam.TopLeftPoint().x, objLine.transform.position.y);
+        _rightPointGenerate = new Vector2(cam.TopRightPoint().x, objLine.transform.position.y);
     }
 
     public void GenerateLevel(int level)
@@ -125,6 +136,7 @@ public class MapGenerator : MonoSingleton<MapGenerator>
                         newNode.SetLocalScale(new Vector2(distance, distance));
                         newNode.SetPosion(new Vector2(fistPos.x + distanceX / 2, fistPos.y - distanceY / 2));
                         node.Add(newNode);
+                        fistPos = new Vector2(fistPos.x + distanceX + offset, fistPos.y);
                         continue;
                     }
 

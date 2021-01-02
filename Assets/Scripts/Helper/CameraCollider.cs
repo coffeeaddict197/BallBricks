@@ -48,7 +48,8 @@ public class CameraCollider : MonoBehaviour
         //TOP
         GameObject wallTop = Instantiate(wall, transform);
         wallTop.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-        wallTop.transform.position = new Vector2(cam.TopMiddlePoint().x, cam.TopMiddlePoint().y + wallTop.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+        GameObject objLine = GameObject.FindGameObjectWithTag("LineSetup");
+        wallTop.transform.position = new Vector2(cam.TopMiddlePoint().x, objLine.transform.position.y + wallTop.GetComponent<SpriteRenderer>().bounds.size.y / 2);
 
         //Bottom
         GameObject wallBot = Instantiate(wall, transform);
