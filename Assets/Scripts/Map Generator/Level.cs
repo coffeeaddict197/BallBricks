@@ -145,10 +145,6 @@ public class Level : MonoBehaviour
             int f = Random.Range(5, 8);
             arr[0][col] = 1 + (float)f / 10;
             pos.RemoveAt(col);
-
-            Debug.Log(1 + (float)f / 10);
-
-
         }
     }
 
@@ -160,6 +156,7 @@ public class Level : MonoBehaviour
             {
                 node.transform.gameObject.SetActive(false);
             }
+            tickNode.Clear();
         }
     }
 

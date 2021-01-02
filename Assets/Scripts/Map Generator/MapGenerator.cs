@@ -47,8 +47,26 @@ public class MapGenerator : MonoSingleton<MapGenerator>
     {
         cam = Camera.main;
         GameObject objLine = GameObject.FindGameObjectWithTag("LineSetup");
-        _leftPointGenerate = new Vector2(cam.TopLeftPoint().x, objLine.transform.position.y);
-        _rightPointGenerate = new Vector2(cam.TopRightPoint().x, objLine.transform.position.y);
+        RectTransform rect = objLine.GetComponent<RectTransform>();
+        //GET 4 CORNER
+        Vector3[] corners = new Vector3[4];
+        rect.GetWorldCorners(corners); //GET 4 Corner form world Position
+        float bottomPos = corners[0].y;
+        foreach(Vector3 corner in corners)
+        {
+            Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, corner);  //Convert To Screen Point
+            if (bottomPos > screenPoint.y)
+            {
+                bottomPos = screenPoint.y;
+            }
+        }
+
+
+
+
+
+        _leftPointGenerate = new Vector2(cam.TopLeftPoint().x, bottomPos);
+        _rightPointGenerate = new Vector2(cam.TopRightPoint().x, bottomPos);
     }
 
     public void GenerateLevel(int level)
