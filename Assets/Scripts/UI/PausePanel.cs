@@ -41,6 +41,8 @@ public class PausePanel : MonoBehaviour
 
     void GoHome()
     {
+        UIManager.Instance.ShowHomePanel();
+        UIManager.Instance.HideGamePanel();
         this.gameObject.SetActive(false);
         GameManager.Instance.UnPauseGame();
     }
@@ -56,6 +58,7 @@ public class PausePanel : MonoBehaviour
     void ReLoad()
     {
         GameManager.Instance.ResetCurrentLevelState();
+        DrawTrajectory.Instance.CantLunchOverTime(0.5F);
         this.gameObject.SetActive(false);
     }
 

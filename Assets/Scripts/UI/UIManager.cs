@@ -8,6 +8,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] MainGamePanel _gamePanel;
     [SerializeField] EndGamePanel _endGamePanel;
     [SerializeField] PausePanel _pausePanel;
+    [SerializeField] HomePanel _homePanel;
 
     private void OnEnable()
     {
@@ -18,20 +19,20 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
 
-    public void ShowEndGameUI()
-    {
-        _endGamePanel.Show();
-    }
 
-
-    public void ShowEndGameInfomation()
+    public void ShowHomePanel() 
     {
-        _endGamePanel.ShowEndGameInfo();
-    }
-
-    public void ShowPausePanel()
+        _homePanel.Show();
+    }  
+    public void ShowGamePanel() => _gamePanel.Show();
+    public void HideGamePanel()
     {
-        _pausePanel.ShowPanel();
+        _gamePanel.Hide();
+        GameManager.Instance.BreakAllInMainGame();
+
     }
+    public void ShowEndGameUI() => _endGamePanel.Show();
+    public void ShowEndGameInfomation() => _endGamePanel.ShowEndGameInfo();
+    public void ShowPausePanel() => _pausePanel.ShowPanel();
 
 }

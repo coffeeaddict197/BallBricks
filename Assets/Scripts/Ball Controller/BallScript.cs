@@ -103,4 +103,6 @@ public class BallScript : MonoBehaviour
         rigid.velocity = Vector2.zero;
         isMoving = false;
     }
+
+   
 }

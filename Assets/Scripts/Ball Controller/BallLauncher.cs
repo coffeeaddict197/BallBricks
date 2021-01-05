@@ -127,12 +127,36 @@ public class BallLauncher : MonoSingleton<BallLauncher>
 
     public void Reset()
     {
-        BasePos = newBasePos;
-        isMoving = false;
-        isRetrieving = false;
-        isBasePosChanged = false;
-        ReturnedBallsCounter = Balls.Count;
-        e_OnReset?.Invoke();
-        LevelManager.Instance.currentLevel.DownLine();
+        if (!GameManager.Instance.isGameOver)
+        {
+            BasePos = newBasePos;
+            isMoving = false;
+            isRetrieving = false;
+            isBasePosChanged = false;
+            ReturnedBallsCounter = Balls.Count;
+            e_OnReset?.Invoke();
+            LevelManager.Instance.currentLevel.DownLine();
+        }
+    }
+
+    public void HideAllBall()
+    {
+        foreach (GameObject g in Balls)
+        {
+            g.GetComponent<BallScript>().Reset();
+        }
+    }
+
+    public void ResetStateBall()
+    {
+        if (!GameManager.Instance.isGameOver)
+        {
+            isMoving = false;
+            isRetrieving = false;
+            isBasePosChanged = false;
+            ReturnedBallsCounter = Balls.Count;
+            e_OnReset?.Invoke();
+        }
+
     }
 }

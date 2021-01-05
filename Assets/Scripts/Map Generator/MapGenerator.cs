@@ -33,14 +33,11 @@ public class MapGenerator : MonoSingleton<MapGenerator>
 
 
         Initialize();
-    }
-
-    private void Start()
-    {
         numOfWidth = LevelManager.Instance.withMatrix;
-        GenerateLevel(1);
-
     }
+
+    
+
 
 
     void Initialize()
@@ -76,10 +73,12 @@ public class MapGenerator : MonoSingleton<MapGenerator>
             LevelManager.Instance.currentLevel.HideAllBlock();
             LevelManager.Instance.currentLevel.allNode.Clear();
         }
-
+        //ONLY USING INFINITY GAME
         List<NodePiece> node = new List<NodePiece>();
         node = DrawMatrix(LevelManager.Instance.LoadLevel(level));
         LevelManager.Instance.currentLevel.allNode = node;
+        //LevelManager.Instance.currentLevel.RandomFirstRowMatrix(LevelManager.Instance.currentLevel.mArray);
+
     }
 
 

@@ -32,6 +32,8 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     [SerializeField] List<GameObject> Dots;
     [SerializeField] List<DotScript> DotScripts = new List<DotScript>();
 
+
+    public bool canLaunch;
     void Start()
     {
         BallLauncher.Instance.e_OnBasePosChange += ChangeBasePos;
@@ -43,6 +45,7 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
             Dots[i].SetActive(true);
             DotScripts.Add(Dots[i].GetComponent<DotScript>());
         }
+        canLaunch = true;
     }
 
     // Update is called once per frame
@@ -57,19 +60,22 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
             return;
         }
 
-        if (Input.GetMouseButton(0))
+        if(canLaunch)
         {
-            var touchPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            if ((touchPos.y - basePos.y) >= lowerHeightLimit)
+            if (Input.GetMouseButton(0))
             {
-                SetDirection(touchPos);
+                var touchPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                if ((touchPos.y - basePos.y) >= lowerHeightLimit)
+                {
+                    SetDirection(touchPos);
+                }
+                DrawLine();
             }
-            DrawLine();
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            Reset();
-            if (touchPos.y > basePos.y) { BallLauncher.Instance.StartFiring(baseDirection); }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                Reset();
+                if (touchPos.y > basePos.y) { BallLauncher.Instance.StartFiring(baseDirection); }
+            }
         }
     }
 
@@ -137,5 +143,17 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     {
         Vector2 screenPos = mainCamera.WorldToViewportPoint(pos);
         return (screenPos.x > 1 || screenPos.x < 0 || screenPos.y > 1 || screenPos.y < 0);
+    }
+
+
+    public void CantLunchOverTime(float t)
+    {
+        StartCoroutine(ToggleLunch(t));
+    }
+    IEnumerator ToggleLunch(float t)
+    {
+        canLaunch = false;
+        yield return new WaitForSecondsRealtime(t);
+        canLaunch = true;
     }
 }

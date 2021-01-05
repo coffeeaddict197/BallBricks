@@ -23,6 +23,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     [Header("Level managerment")]
     public Level[] allLevel;
     public Level currentLevel;
+    Level _temp;
 
     [Header("Matrix Setup")]
     public int withMatrix;
@@ -32,7 +33,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     {
         currentLevel = null;
         allLevel = GetComponents<Level>();
-        
+                
     }
 
 

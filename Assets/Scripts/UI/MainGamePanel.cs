@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 public class MainGamePanel : MonoBehaviour
 {
 #pragma warning disable
@@ -16,11 +17,10 @@ public class MainGamePanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI _textHighScore;
 
 
-    private void OnEnable()
+    private void Awake()
     {
         AddEventOnClick();
     }
-
     void AddEventOnClick()
     {
         _btnPause.onClick.AddListener(PauseGame);
@@ -45,6 +45,18 @@ public class MainGamePanel : MonoBehaviour
     public void SetHighScore(int score)
     {
         _textHighScore.text = score.ToString();
+    }
+
+    public void Show()
+    {
+        transform.GetComponent<CanvasGroup>().DOFade(1, 0.5f);
+        transform.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
+    public void Hide()
+    {
+        transform.GetComponent<CanvasGroup>().DOFade(0, 0.5f);
+        transform.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
 

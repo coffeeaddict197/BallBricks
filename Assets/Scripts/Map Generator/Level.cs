@@ -13,15 +13,13 @@ public class Level : MonoBehaviour
     [HideInInspector]
     public List<NodePiece> allNode;
 
-    [Header("RATE") , Range(0,100)]
+    [Header("RATE"), Range(0, 100)]
     [SerializeField] int RateEffect;
 
 
     [HideInInspector]
     //tick the node (example effect2d , effect verticle , ...) will be destroy when launching end 
     public List<NodePiece> tickNode;
-
-
 
     private void Awake()
     {
@@ -44,7 +42,7 @@ public class Level : MonoBehaviour
         CreateFirstLineMatrix();
         step++;
         GameManager.Instance.Step = step;
-        
+
     }
 
     void CreateFirstLineMatrix()
@@ -60,9 +58,9 @@ public class Level : MonoBehaviour
         int temp = 0;
         for (int i = 0; i < LevelManager.Instance.withMatrix; i++)
         {
-            for(int j = 0; j < LevelManager.Instance.withMatrix; j++)
+            for (int j = 0; j < LevelManager.Instance.withMatrix; j++)
             {
-                if(mArray[i][j]>0)
+                if (mArray[i][j] > 0)
                 {
                     temp++;
                 }
@@ -74,7 +72,7 @@ public class Level : MonoBehaviour
 
     public void HideAllBlock()
     {
-        for(int i = 0; i< allNode.Count; i++)
+        for (int i = 0; i < allNode.Count; i++)
         {
             allNode[i].gameObject.SetActive(false);
         }
@@ -96,11 +94,11 @@ public class Level : MonoBehaviour
         }
 
         //Random effect
-        RandomInscreBall(array , ref posBlank);
-        RandomEffect(array , ref posBlank);
+        RandomInscreBall(array, ref posBlank);
+        RandomEffect(array, ref posBlank);
     }
 
-    bool RandomBlank(ArrayInt[] array , int i)
+    bool RandomBlank(ArrayInt[] array, int i)
     {
         int isNew = Random.Range(0, 2);
         if (isNew == 0)
@@ -111,7 +109,7 @@ public class Level : MonoBehaviour
         return false;
     }
 
-    bool RandomBlock(ArrayInt[] array , int i)
+    bool RandomBlock(ArrayInt[] array, int i)
     {
         float newPoint = Random.Range(step, step + 10);
         int ratio = Random.Range(0, 100 + 1);
@@ -133,7 +131,7 @@ public class Level : MonoBehaviour
     }
 
 
-    void RandomInscreBall(ArrayInt[] arr ,  ref List<int> pos)
+    void RandomInscreBall(ArrayInt[] arr, ref List<int> pos)
     {
         int col = Random.Range(0, pos.Count);
         arr[0][col] = -1;
@@ -141,10 +139,10 @@ public class Level : MonoBehaviour
 
     }
 
-    void RandomEffect(ArrayInt[] arr , ref List<int> pos)
+    void RandomEffect(ArrayInt[] arr, ref List<int> pos)
     {
         int rd = Random.Range(0, 100);
-        if(rd< RateEffect)
+        if (rd < RateEffect)
         {
             int col = Random.Range(0, pos.Count);
             int f = Random.Range(5, 8);
@@ -153,9 +151,24 @@ public class Level : MonoBehaviour
         }
     }
 
+    public void ReRandomPointNode()
+    {
+        Debug.Log(allNode.Count);
+        for (int i = 0; i < allNode.Count; i++)
+        {
+            var checkA = allNode[i].GetComponent<Brick>();
+            var checkB = allNode[i].GetComponent<Triagle>();
+            if(checkA !=null || checkB!= null)
+            {
+                allNode[i].Point = step + Random.Range(1, 5);
+            }
+        }
+
+    }
+
     void UnactiveAllTickNode()
     {
-        if(tickNode.Count!=0)
+        if (tickNode.Count != 0)
         {
             foreach (NodePiece node in tickNode)
             {
@@ -175,13 +188,24 @@ public class Level : MonoBehaviour
 
     public void ResetToOrigin()
     {
-        for(int i = 0; i < allNode.Count; i++)
+        for (int i = 0; i < allNode.Count; i++)
         {
             allNode[i].SelfBroken();
         }
         allNode.Clear();
         step = 1;
         CreateFirstLineMatrix();
+        GameManager.Instance.Step = step;
+    }
+
+    public void BrokenAll()
+    {
+        for (int i = 0; i < allNode.Count; i++)
+        {
+            allNode[i].SelfBroken();
+        }
+        allNode.Clear();
+        step = 1;
         GameManager.Instance.Step = step;
     }
 
