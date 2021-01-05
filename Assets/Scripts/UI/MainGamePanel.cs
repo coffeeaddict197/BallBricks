@@ -29,6 +29,7 @@ public class MainGamePanel : MonoBehaviour
     void PauseGame()
     {
         Time.timeScale = 0f;
+        UIManager.Instance.ShowPausePanel();
     }
 
     void UnPause()

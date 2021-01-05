@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class Level : MonoBehaviour
 {
     [Header("Setup default Level")]
@@ -41,12 +41,17 @@ public class Level : MonoBehaviour
         foreach (NodePiece node in allNode)
             node.DownLine();
 
-        RandomFirstRowMatrix(mArray);
-        //Add new to list
-        allNode.AddRange(MapGenerator.Instance.GenerateNewLineBlock(this));
+        CreateFirstLineMatrix();
         step++;
         GameManager.Instance.Step = step;
         
+    }
+
+    void CreateFirstLineMatrix()
+    {
+        RandomFirstRowMatrix(mArray);
+        //Add new to list
+        allNode.AddRange(MapGenerator.Instance.GenerateNewLineBlock(this));
     }
 
 
@@ -158,6 +163,26 @@ public class Level : MonoBehaviour
             }
             tickNode.Clear();
         }
+    }
+
+    public void StopAllNode()
+    {
+        for (int i = 0; i < allNode.Count; i++)
+        {
+            allNode[i].gameObject.GetComponent<NodePiece>().enabled = false;
+        }
+    }
+
+    public void ResetToOrigin()
+    {
+        for(int i = 0; i < allNode.Count; i++)
+        {
+            allNode[i].SelfBroken();
+        }
+        allNode.Clear();
+        step = 1;
+        CreateFirstLineMatrix();
+        GameManager.Instance.Step = step;
     }
 
 

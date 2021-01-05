@@ -15,7 +15,7 @@ public static class MyTags
     public const string EFFECT_VERTICLE = "Effect Verticle";
     public const string HorizontalLine = "HorizontalLine";
     public const string VerticleLine = "VerticleLine";
-
+    public const string BASE = "Base";
     public const string BREAKER = "Breaker";
 
 

@@ -19,19 +19,22 @@ public class EffectVerticle : NodePiece
 
     public override void Collided()
     {
-        if (!isTick)
+        if (!GameManager.Instance.isGameOver)
         {
-            isTick = true;
-            LevelManager.Instance.currentLevel.tickNode.Add(this);
-        }
-        ObjectPool.Instance.Spawn(MyTags.VerticleLine , transform.position);
+            if (!isTick)
+            {
+                isTick = true;
+                LevelManager.Instance.currentLevel.tickNode.Add(this);
+            }
+            ObjectPool.Instance.Spawn(MyTags.VerticleLine, transform.position);
 
-        //TOP
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.down, 50f, layer);
-        ImpactToHits(hits);
-        //BOTTOM
-        hits = Physics2D.RaycastAll(transform.position, Vector2.up, 50f, layer);
-        ImpactToHits(hits);
+            //TOP
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.down, 50f, layer);
+            ImpactToHits(hits);
+            //BOTTOM
+            hits = Physics2D.RaycastAll(transform.position, Vector2.up, 50f, layer);
+            ImpactToHits(hits);
+        }
     }
 
 

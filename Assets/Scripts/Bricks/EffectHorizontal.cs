@@ -19,20 +19,26 @@ public class EffectHorizontal : NodePiece
 
     public override void Collided()
     {
-        if (!isTick)
+        if (!GameManager.Instance.isGameOver)
         {
-            isTick = true;
-            LevelManager.Instance.currentLevel.tickNode.Add(this);
+            if (!isTick)
+            {
+                isTick = true;
+                LevelManager.Instance.currentLevel.tickNode.Add(this);
+            }
+
+            ObjectPool.Instance.Spawn(MyTags.HorizontalLine, transform.position);
+
+            //RIGHT
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.right, 50f, layer);
+            ImpactToHits(hits);
+            //LEFT
+            hits = Physics2D.RaycastAll(transform.position, Vector2.left, 50f, layer);
+            ImpactToHits(hits);
         }
 
-        ObjectPool.Instance.Spawn(MyTags.HorizontalLine , transform.position);
 
-        //RIGHT
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.right, 50f, layer);
-        ImpactToHits(hits);
-        //LEFT
-        hits = Physics2D.RaycastAll(transform.position, Vector2.left, 50f, layer);
-        ImpactToHits(hits);
+
     }
 
 

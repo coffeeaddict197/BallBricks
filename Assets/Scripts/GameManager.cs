@@ -7,7 +7,7 @@ public class GameManager : MonoSingleton<GameManager>
     [Header("Game Properties")]
     private int _step;
     private int _highScore;
-
+    public bool isGameOver;
     // Getter setter
     public int Step
     {
@@ -45,4 +45,32 @@ public class GameManager : MonoSingleton<GameManager>
         _highScore = PlayerPrefs.GetInt(KEY_HIGHSCORE, 0);
 
     }
+
+
+    public void ResetCurrentLevelState()
+    {
+        ResetGameState();
+        LevelManager.Instance.currentLevel.ResetToOrigin();
+    }
+
+    public void ResetGameState()
+    {
+        //RESET BALL NUMBER
+        Time.timeScale = 1f;
+        isGameOver = false;
+        Step = 1;
+    }
+
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void UnPauseGame()
+    {
+        Time.timeScale = 1f;
+
+    }
+
 }

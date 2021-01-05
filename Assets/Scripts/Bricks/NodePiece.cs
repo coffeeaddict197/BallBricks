@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
-public class NodePiece : MonoBehaviour , ICollisionWithBall
+public class NodePiece : MonoBehaviour, ICollisionWithBall
 {
 
     [Header("Node Properties")]
@@ -29,33 +29,38 @@ public class NodePiece : MonoBehaviour , ICollisionWithBall
         Point = _point;
     }
 
+
+    private void OnEnable()
+    {
+        transform.DOKill();
+    }
     private void CheckToChangeColor(int point)
     {
-        if(point >= 10 && point<20)
+        if (point >= 10 && point < 20)
         {
             sprite.color = BrickColor.c_Around10;
         }
-        else if(point<=20)
+        else if (point <= 20)
         {
             sprite.color = BrickColor.c_Around20;
         }
-        else if(point <= 30)
+        else if (point <= 30)
         {
             sprite.color = BrickColor.c_Around30;
         }
-        else if(point <= 40)
+        else if (point <= 40)
         {
             sprite.color = BrickColor.c_Around40;
         }
-        else if(point <= 50)
+        else if (point <= 50)
         {
             sprite.color = BrickColor.c_Around50;
         }
-        else if(point <= 60)
+        else if (point <= 60)
         {
             sprite.color = BrickColor.c_Around60;
         }
-        else if(point <= 70)
+        else if (point <= 70)
         {
             sprite.color = BrickColor.c_Around70;
         }
@@ -70,11 +75,11 @@ public class NodePiece : MonoBehaviour , ICollisionWithBall
 
     }
 
-   
+
 
     public void DownLine()
     {
-        Vector3 newPos = new Vector3(transform.position.x, transform.position.y - transform.localScale.y , 0f);
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, 0f);
         transform.DOMove(newPos, 0.3f).SetUpdate(false).SetEase(Ease.OutBack);
     }
 
@@ -87,19 +92,23 @@ public class NodePiece : MonoBehaviour , ICollisionWithBall
     {
         _originPos = pos;
         transform.position = new Vector3(_originPos.x, transform.position.y + 10f);
-        transform.DOKill();
         transform.DOMove(_originPos, 0.5f).SetEase(Ease.OutBack);
     }
 
     public virtual void Collided()
     {
-        Point--;
-        if (Point == 0)
+
+        if(!GameManager.Instance.isGameOver)
         {
-            LevelManager.Instance.currentLevel.countBlock--;
-            SpawnBreaker();
-            gameObject.SetActive(false);
+            Point--;
+            if (Point == 0)
+            {
+                LevelManager.Instance.currentLevel.countBlock--;
+                SpawnBreaker();
+                gameObject.SetActive(false);
+            }
         }
+
     }
 
     void SpawnBreaker()
@@ -107,5 +116,27 @@ public class NodePiece : MonoBehaviour , ICollisionWithBall
         GameObject breaker = ObjectPool.Instance.Spawn(MyTags.BREAKER);
         breaker.transform.position = transform.position;
     }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.tag.Equals(MyTags.BASE))
+        {
+
+            GameManager.Instance.isGameOver = true;
+            Time.timeScale = 0f;
+            UIManager.Instance.ShowEndGameUI();
+        }
+    }
+
+
+    public void SelfBroken()
+    {
+        transform.DOKill();
+        LevelManager.Instance.currentLevel.countBlock--;
+        SpawnBreaker();
+        gameObject.SetActive(false);
+    }
+
 
 }
