@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+
     [Header("All panel in UI")]
     [SerializeField] MainGamePanel _gamePanel;
     [SerializeField] EndGamePanel _endGamePanel;

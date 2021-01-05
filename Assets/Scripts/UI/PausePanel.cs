@@ -49,7 +49,6 @@ public class PausePanel : MonoBehaviour
 
     void PlayAgain()
     {
-
         this.gameObject.SetActive(false);
         GameManager.Instance.UnPauseGame();
 

@@ -4,18 +4,34 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using GoogleMobileAds.Api;
+using System;
+
 public class AdsPopup : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textSecond;
     [SerializeField] Button clickAds;
     [SerializeField] Image fillImg;
 
+    [Header("Ads control")]
+    [SerializeField] string adSampleUnitId = "ca-app-pub-3940256099942544/5224354917";
+    [SerializeField] RewardedAd rewardedAd;
+
     private int time;
 
+    private void Start()
+    {
+        MobileAds.Initialize(initStatus => { });
+        this.rewardedAd = new RewardedAd(adSampleUnitId);
+
+        // Create an empty ad request.
+        AdRequest request = new AdRequest.Builder().Build();
+        // Load the rewarded ad with the request.
+        this.rewardedAd.LoadAd(request);
+    }
 
     private void OnEnable()
     {
-
         time = 5;
         textSecond.text = time.ToString();
 
@@ -64,6 +80,9 @@ public class AdsPopup : MonoBehaviour
 
     void ShowAds()
     {
-        Debug.Log("ADS ON");
+        if (this.rewardedAd.IsLoaded())
+        {
+            this.rewardedAd.Show();
+        }
     }
 }

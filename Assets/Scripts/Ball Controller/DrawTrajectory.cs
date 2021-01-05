@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DrawTrajectory : MonoSingleton<DrawTrajectory>
 {
@@ -32,6 +33,8 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     [SerializeField] List<GameObject> Dots;
     [SerializeField] List<DotScript> DotScripts = new List<DotScript>();
 
+    [SerializeField] bool isTouched;
+
 
     public bool canLaunch;
     void Start()
@@ -51,6 +54,8 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(Time.timeScale + " " + canLaunch);
+
         if (BallLauncher.Instance.isMoving)
         {
             if (Input.GetMouseButtonDown(1))
@@ -60,12 +65,21 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
             return;
         }
 
-        if(canLaunch)
+        if (canLaunch)
         {
             if (Input.GetMouseButton(0))
             {
+                isTouched = true;
+
+                if (EventSystem.current.currentSelectedGameObject != null)
+                    if (EventSystem.current.currentSelectedGameObject.tag.Equals(MyTags.BUTTON_TAG))
+                    {
+                        isTouched = false;
+                        return;
+                    }
+
                 var touchPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                if ((touchPos.y - basePos.y) >= lowerHeightLimit)
+                if ((touchPos.y - basePos.y) >= lowerHeightLimit && isTouched)
                 {
                     SetDirection(touchPos);
                 }
@@ -77,6 +91,11 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
                 if (touchPos.y > basePos.y) { BallLauncher.Instance.StartFiring(baseDirection); }
             }
         }
+    }
+
+        private void FixedUpdate()
+    {
+       // Debug.Log(Time.timeScale + " " + canLaunch);
     }
 
     private void SetDirection(Vector2 touchPos)

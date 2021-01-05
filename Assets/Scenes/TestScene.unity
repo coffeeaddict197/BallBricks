@@ -215,6 +215,7 @@ MonoBehaviour:
   textSecond: {fileID: 1933619019}
   clickAds: {fileID: 1593959801}
   fillImg: {fileID: 2141659329}
+  adSampleUnitId: ca-app-pub-3940256099942544/5224354917
 --- !u!1 &116567467
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +565,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   DotScripts: []
+  canLaunch: 0
 --- !u!1 &316540802
 GameObject:
   m_ObjectHideFlags: 0
@@ -3454,7 +3456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3511,7 +3513,7 @@ MonoBehaviour:
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
-  m_isRichText: 1
+  m_isRichText: 0
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
