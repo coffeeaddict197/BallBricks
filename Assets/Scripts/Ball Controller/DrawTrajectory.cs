@@ -54,7 +54,6 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Time.timeScale + " " + canLaunch);
 
         if (BallLauncher.Instance.isMoving)
         {
@@ -69,14 +68,15 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
         {
             if (Input.GetMouseButton(0))
             {
-                isTouched = true;
-
                 if (EventSystem.current.currentSelectedGameObject != null)
                     if (EventSystem.current.currentSelectedGameObject.tag.Equals(MyTags.BUTTON_TAG))
                     {
+                        Debug.Log("TEST");
                         isTouched = false;
                         return;
                     }
+
+                isTouched = true;
 
                 var touchPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 if ((touchPos.y - basePos.y) >= lowerHeightLimit && isTouched)
@@ -85,7 +85,7 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
                 }
                 DrawLine();
             }
-            else if (Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButtonUp(0) && isTouched)
             {
                 Reset();
                 if (touchPos.y > basePos.y) { BallLauncher.Instance.StartFiring(baseDirection); }

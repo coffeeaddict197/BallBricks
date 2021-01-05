@@ -20,6 +20,7 @@ TagManager:
   - VerticleLine
   - HorizontalLine
   - Base
+  - Button
   layers:
   - Default
   - TransparentFX

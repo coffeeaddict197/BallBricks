@@ -565,6 +565,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   DotScripts: []
+  isTouched: 0
   canLaunch: 0
 --- !u!1 &316540802
 GameObject:
@@ -613,7 +614,7 @@ GameObject:
   - component: {fileID: 326606579}
   m_Layer: 0
   m_Name: Home
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -731,7 +732,7 @@ GameObject:
   - component: {fileID: 445577834}
   m_Layer: 0
   m_Name: PlayButton
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1036,7 +1037,7 @@ GameObject:
   - component: {fileID: 533938155}
   m_Layer: 0
   m_Name: PlayAgain
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1712,7 +1713,7 @@ GameObject:
   - component: {fileID: 652935112}
   m_Layer: 0
   m_Name: Reload
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3173,7 +3174,7 @@ GameObject:
   - component: {fileID: 1006947424}
   m_Layer: 0
   m_Name: MoreBall
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3292,7 +3293,7 @@ GameObject:
   - component: {fileID: 1044733641}
   m_Layer: 0
   m_Name: Home
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3821,7 +3822,7 @@ GameObject:
   - component: {fileID: 1320470240}
   m_Layer: 0
   m_Name: OptionsButton
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4263,7 +4264,7 @@ GameObject:
   - component: {fileID: 1542976355}
   m_Layer: 0
   m_Name: Challenge
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4655,7 +4656,7 @@ GameObject:
   - component: {fileID: 1620104971}
   m_Layer: 10
   m_Name: Guide
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5287,7 +5288,7 @@ GameObject:
   - component: {fileID: 1802573688}
   m_Layer: 0
   m_Name: PlayAgain
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5894,7 +5895,7 @@ GameObject:
   - component: {fileID: 1995103619}
   m_Layer: 10
   m_Name: Pause
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
