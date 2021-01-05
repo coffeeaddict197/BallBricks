@@ -153,7 +153,6 @@ public class Level : MonoBehaviour
 
     public void ReRandomPointNode()
     {
-        Debug.Log(allNode.Count);
         for (int i = 0; i < allNode.Count; i++)
         {
             var checkA = allNode[i].GetComponent<Brick>();

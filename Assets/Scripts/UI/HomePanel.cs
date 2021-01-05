@@ -18,7 +18,7 @@ public class HomePanel : MonoBehaviour
     {
         transform.DOKill();
         this.transform.localScale = Vector3.zero;
-        this.transform.DOScale(1, 1f).SetEase(Ease.Linear);
+        this.transform.DOScale(1, 0.5f).SetEase(Ease.Linear);
     }
     void AddEventClick()
     {
