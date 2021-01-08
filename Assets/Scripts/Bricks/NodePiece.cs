@@ -101,6 +101,8 @@ public class NodePiece : MonoBehaviour, ICollisionWithBall
         if(!GameManager.Instance.isGameOver)
         {
             Point--;
+            SpawnCollisionEffect();
+            SoundManager.Instance.PlayOneShot(SoundName.HIT);
             if (Point == 0)
             {
                 LevelManager.Instance.currentLevel.countBlock--;
@@ -117,7 +119,14 @@ public class NodePiece : MonoBehaviour, ICollisionWithBall
         breaker.transform.position = transform.position;
     }
 
+    void SpawnCollisionEffect()
+    {
+        GameObject collisionEffect = ObjectPool.Instance.Spawn(MyTags.COLLISION);
+        collisionEffect.transform.position = transform.position;
+    }
 
+
+    //END GAME HANDLE
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag.Equals(MyTags.BASE))

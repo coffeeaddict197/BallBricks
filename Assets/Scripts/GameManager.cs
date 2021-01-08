@@ -50,7 +50,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     }
 
-
+    
     public void ResetCurrentLevelState()
     {
         ResetGameState();

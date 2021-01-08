@@ -63,7 +63,7 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
             }
             return;
         }
-
+        
         if (canLaunch)
         {
             if (Input.GetMouseButton(0))
@@ -71,7 +71,6 @@ public class DrawTrajectory : MonoSingleton<DrawTrajectory>
                 if (EventSystem.current.currentSelectedGameObject != null)
                     if (EventSystem.current.currentSelectedGameObject.tag.Equals(MyTags.BUTTON_TAG))
                     {
-                        Debug.Log("TEST");
                         isTouched = false;
                         return;
                     }

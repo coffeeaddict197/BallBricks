@@ -21,19 +21,21 @@ public class MapGenerator : MonoSingleton<MapGenerator>
 
 
     [Header("First Setup")]
+    public Vector3 commandScale;
     Vector2 _leftPointGenerate;
     Vector2 _rightPointGenerate;
     int numOfWidth;
+    
     [SerializeField] float offset;
 
     GameObject baseObject;
+    
 
     private new void Awake()
     {
 
-
-        Initialize();
         numOfWidth = LevelManager.Instance.withMatrix;
+        Initialize();
     }
 
     
@@ -58,12 +60,17 @@ public class MapGenerator : MonoSingleton<MapGenerator>
             }
         }
 
-
-
-
-
         _leftPointGenerate = new Vector2(cam.TopLeftPoint().x, bottomPos);
         _rightPointGenerate = new Vector2(cam.TopRightPoint().x, bottomPos);
+
+        //Calc scale one object
+        float distance = (Vector2.Distance(_leftPointGenerate, _rightPointGenerate) - offset * (numOfWidth - 1)) / numOfWidth;  //Distance mean scale 
+        float scaleFactor = brick.GetComponent<SpriteRenderer>().sprite.rect.width / brick.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+
+        //Convert scale to distance accurate
+        distance /= scaleFactor;
+        commandScale = new Vector3(distance, distance);
+
     }
 
     public void GenerateLevel(int level)

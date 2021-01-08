@@ -264,44 +264,44 @@ MonoBehaviour:
   countBlock: 0
   mArray:
   - values:
-    - 10
-    - 10
-    - 10
-    - 10
-    - 10
-    - 10
-    - 10
-    - 10
-    - 0
-  - values:
-    - 10
-    - 10
-    - 10
-    - 10
-    - 2.5
-    - 10
-    - 10
-    - 10
-    - 0
-  - values:
-    - 0
-    - 0
-    - 10
     - 0
     - 0
     - 0
+    - 1
+    - 1
+    - 1
     - 0
     - 0
     - 0
   - values:
+    - 0
+    - 1
+    - 0
+    - 1
+    - 1
+    - 1
+    - 0
+    - 1
+    - 0
+  - values:
+    - 0
+    - 0
     - 10
-    - 10
-    - 2.7
-    - 10
-    - 2.6
-    - 10
-    - 10
-    - 10
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - values:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
     - 0
   - values:
     - 0
@@ -680,7 +680,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 326606580}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &326606580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,7 +810,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 445577835}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &445577835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,7 +1126,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 533938156}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &533938156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1780,7 +1813,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 652935113}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &652935113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2206,6 +2250,7 @@ MonoBehaviour:
     type: 3}
   inscrease: {fileID: 8605891292660751563, guid: d7408b7d8b96290459377196fd1993ad,
     type: 3}
+  commandScale: {x: 0, y: 0, z: 0}
   offset: 0.02
 --- !u!1 &729205399
 GameObject:
@@ -3241,7 +3286,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1006947425}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1006947425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3360,7 +3416,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1044733642}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1044733642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3585,6 +3652,7 @@ Transform:
   - {fileID: 116567468}
   - {fileID: 759813612}
   - {fileID: 1670099714}
+  - {fileID: 1418759165}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3889,7 +3957,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1320470241}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1320470241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4043,6 +4122,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1418759164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1418759165}
+  - component: {fileID: 1418759166}
+  m_Layer: 0
+  m_Name: _SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1418759165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418759164}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1180444814}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1418759166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418759164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4a5b0fa5492de641b719ef24e50f0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundLoops: []
+  soundFXs:
+  - name: hit_brick
+    clip: {fileID: 8300000, guid: 20f36b76c3c14d44db81104b2005ef00, type: 3}
+    volume: 1
+    maxVolume: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: click
+    clip: {fileID: 8300000, guid: 15f51e03ce0915e458fe3fd6b30d1a00, type: 3}
+    volume: 1
+    maxVolume: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &1526006153
 GameObject:
   m_ObjectHideFlags: 0
@@ -4187,61 +4323,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   BallScripts: []
   basePosOffset: 0.1
   _speed: 10
@@ -4331,7 +4412,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1542976356}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1542976356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4489,7 +4581,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1593959802}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1593959802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4634,12 +4748,17 @@ MonoBehaviour:
   - gameObject: {fileID: 8828282769012499345, guid: 9def372474d9d064bb6671c9621f6dec,
       type: 3}
     count: 30
-    expandable: 0
+    expandable: 1
     firstIndex: 0
   - gameObject: {fileID: 67646385396011793, guid: 4f634af0db0654e49a82708ad40fb2cd,
       type: 3}
     count: 30
-    expandable: 0
+    expandable: 1
+    firstIndex: 0
+  - gameObject: {fileID: 7979484811908749426, guid: bda81a9c872ae0b4e9a81e26ebaab67b,
+      type: 3}
+    count: 50
+    expandable: 1
     firstIndex: 0
   pooledGobjects: []
 --- !u!1 &1620104967
@@ -4673,7 +4792,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1751871421}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -4759,7 +4878,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1620104969}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1637472507
 GameObject:
   m_ObjectHideFlags: 0
@@ -5190,8 +5320,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1620104968}
   - {fileID: 1995103616}
+  - {fileID: 1620104968}
   m_Father: {fileID: 189124134}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5354,7 +5484,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1802573689}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1802573689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5912,7 +6053,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1751871421}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -5998,7 +6139,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1995103617}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418759166}
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2074440528
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,4 +18,6 @@ public static class MyTags
     public const string BASE = "Base";
     public const string BREAKER = "Breaker";
     public const string BUTTON_TAG = "Button";
+    public const string COLLISION = "Collision";
+
 }
