@@ -34,5 +34,4 @@ public class UIManager : MonoSingleton<UIManager>
     public void ShowEndGameUI() => _endGamePanel.Show();
     public void ShowEndGameInfomation() => _endGamePanel.ShowEndGameInfo();
     public void ShowPausePanel() => _pausePanel.ShowPanel();
-
 }

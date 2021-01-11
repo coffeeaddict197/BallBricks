@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c792550846404b42a460d10a76e0ef3, type: 3}
   m_Name: Ball_16
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 8c4dbd5e7c07b0944b59b18ac3d3eef8, type: 3}
+  mainImg: {fileID: 21300000, guid: 8c4dbd5e7c07b0944b59b18ac3d3eef8, type: 3}
+  ballName: Ball 16
   price: 100
+  isPurchased: 0
+  isFree: 0
+  inUse: 0
