@@ -10,6 +10,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] EndGamePanel _endGamePanel;
     [SerializeField] PausePanel _pausePanel;
     [SerializeField] HomePanel _homePanel;
+    [SerializeField] ShopPanel _shopPanel;
 
     private void OnEnable()
     {
@@ -18,8 +19,6 @@ public class UIManager : MonoSingleton<UIManager>
         _gamePanel.SetStep(0);
         _gamePanel.SetHighScore(GameManager.Instance.HighScore);
     }
-
-
 
     public void ShowHomePanel() 
     {
