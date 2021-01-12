@@ -22,11 +22,6 @@ public class SoundManager : MonoSingleton<SoundManager>
         onSound = PlayerPrefs.GetInt(KEY_SOUND, 1);
         onMusic = PlayerPrefs.GetInt(KEY_MUSIC, 1);
         Initialize();
-
-        Debug.Log(onSound);
-        Debug.Log(onMusic);
-
-
     }
 
     void Initialize()

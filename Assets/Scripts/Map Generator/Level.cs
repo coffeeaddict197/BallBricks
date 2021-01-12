@@ -41,7 +41,8 @@ public class Level : MonoBehaviour
 
         CreateFirstLineMatrix();
         step++;
-        GameManager.Instance.Step = step;
+        GameManager.playerData.Step = step;
+        SaveLoadManager.SaveData(GameManager.playerData);
 
     }
 
@@ -96,6 +97,7 @@ public class Level : MonoBehaviour
         //Random effect
         RandomInscreBall(array, ref posBlank);
         RandomEffect(array, ref posBlank);
+        RandomDiamond(array , ref posBlank);
     }
 
     bool RandomBlank(ArrayInt[] array, int i)
@@ -136,7 +138,6 @@ public class Level : MonoBehaviour
         int col = Random.Range(0, pos.Count);
         arr[0][col] = -1;
         pos.RemoveAt(col);
-
     }
 
     void RandomEffect(ArrayInt[] arr, ref List<int> pos)
@@ -151,6 +152,21 @@ public class Level : MonoBehaviour
         }
     }
 
+    void RandomDiamond(ArrayInt[] arr, ref List<int> pos)
+    {
+        int rd = Random.Range(0, 100);
+        if (rd < 100)
+        {
+            int col = Random.Range(0, pos.Count);
+            int f = 9;
+            arr[0][col] = 1 + (float)f / 10;
+            pos.RemoveAt(col);
+        }
+    }
+
+
+
+    //Reload game => Respawn
     public void ReRandomPointNode()
     {
         for (int i = 0; i < allNode.Count; i++)
@@ -162,7 +178,6 @@ public class Level : MonoBehaviour
                 allNode[i].Point = step + Random.Range(1, 5);
             }
         }
-
     }
 
     void UnactiveAllTickNode()
@@ -194,7 +209,7 @@ public class Level : MonoBehaviour
         allNode.Clear();
         step = 1;
         CreateFirstLineMatrix();
-        GameManager.Instance.Step = step;
+        GameManager.playerData.Step = step;
     }
 
     public void BrokenAll()
@@ -205,7 +220,7 @@ public class Level : MonoBehaviour
         }
         allNode.Clear();
         step = 1;
-        GameManager.Instance.Step = step;
+        GameManager.playerData.Step = step;
     }
 
 

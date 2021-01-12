@@ -11,6 +11,7 @@ public class LevelManager : MonoSingleton<LevelManager>
      .2 : ◹
      .3 : ◺
      .4 : ⊿
+     .9 diamond
       0 : blank
       -1 : Inscre ball number;
 

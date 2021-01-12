@@ -153,10 +153,11 @@ public class MapGenerator : MonoSingleton<MapGenerator>
                     }
                     else
                     {
-                        //EFFECT
+                        //EFFECT AND ITEM
                         if (f == 5) newNode = ObjectPool.Instance.Spawn(MyTags.EFFECT_HORIZONTAL).GetComponent<NodePiece>();
                         else if (f == 6) newNode = ObjectPool.Instance.Spawn(MyTags.EFFECT_VERTICLE).GetComponent<NodePiece>();
                         else if (f == 7) newNode = ObjectPool.Instance.Spawn(MyTags.EFFECT_2D).GetComponent<NodePiece>();
+                        else if (f==9) newNode = ObjectPool.Instance.Spawn(MyTags.DIAMIOND).GetComponent<NodePiece>();
                         newNode.SetLocalScale(new Vector2(distance, distance));
                         newNode.SetPosion(new Vector2(fistPos.x + distanceX / 2, fistPos.y - distanceY / 2));
                         node.Add(newNode);
@@ -247,6 +248,7 @@ public class MapGenerator : MonoSingleton<MapGenerator>
                     if (f == 5) newNode = ObjectPool.Instance.Spawn(MyTags.EFFECT_HORIZONTAL).GetComponent<NodePiece>();
                     else if (f == 6) newNode = ObjectPool.Instance.Spawn(MyTags.EFFECT_VERTICLE).GetComponent<NodePiece>();
                     else if (f == 7) newNode = ObjectPool.Instance.Spawn(MyTags.EFFECT_2D).GetComponent<NodePiece>();
+                    else if (f==9) newNode = ObjectPool.Instance.Spawn(MyTags.DIAMIOND).GetComponent<NodePiece>();
 
 
                     newNode.SetLocalScale(new Vector2(distance, distance));

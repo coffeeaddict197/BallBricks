@@ -17,7 +17,7 @@ public class UIManager : MonoSingleton<UIManager>
         GameManager.e_setStep += _gamePanel.SetStep;
         GameManager.e_setHighScore += _gamePanel.SetHighScore;
         _gamePanel.SetStep(0);
-        _gamePanel.SetHighScore(GameManager.Instance.HighScore);
+        _gamePanel.SetHighScore(GameManager.playerData.HighScore);
     }
 
     public void ShowHomePanel() 

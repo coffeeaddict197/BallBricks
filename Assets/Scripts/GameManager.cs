@@ -5,52 +5,71 @@ using System;
 public class GameManager : MonoSingleton<GameManager>
 {
     [Header("Game Properties")]
-    private int _step;
-    private int _highScore;
     public bool isGameOver;
-    // Getter setter
-    public int Step
-    {
-        get => this._step;
-        set
-        {
-            this._step = value;
-            e_setStep?.Invoke(value);
-            if (this._step > HighScore)
-            {
-                HighScore = this._step;
-            }
-        }
-    }
-    public int HighScore
-    {
-        get => this._highScore;
-        set
-        {
-            this._highScore = value;
-            PlayerPrefs.SetInt(KEY_HIGHSCORE, this._highScore);
-            e_setHighScore?.Invoke(this._highScore);
-        }
-    }
+    public static PlayerData playerData;
+    //private int _step;
+    //private int _highScore;
+    //private int _diamonds;
+    //// Getter setter
+    //public int Step
+    //{
+    //    get => this._step;
+    //    set
+    //    {
+    //        this._step = value;
+    //        e_setStep?.Invoke(value);
+    //        if (this._step > HighScore)
+    //        {
+    //            HighScore = this._step;
+    //        }
+    //    }
+    //}
+    //public int HighScore
+    //{
+    //    get => this._highScore;
+    //    set
+    //    {
+    //        this._highScore = value;
+    //        PlayerPrefs.SetInt(KEY_HIGHSCORE, this._highScore);
+    //        e_setHighScore?.Invoke(this._highScore);
+    //    }
+    //}
 
+    //public int Diamonds
+    //{
+    //    get => _diamonds;
+    //    set
+    //    {
+    //        _diamonds = value;
+    //    }
+    //}
     [Header("Game Event")]
     public static Action<int> e_setStep;
     public static Action<int> e_setHighScore;
 
     //KEY STRING
-    const string KEY_HIGHSCORE = "HighScore";
+    public const string KEY_HIGHSCORE = "HighScore";
 
     [Header("Game Object")]
     [SerializeField] GameObject BallObject;
+
+    
+
     
 
     private new void Awake()
     {
-        _highScore = PlayerPrefs.GetInt(KEY_HIGHSCORE, 0);
+        playerData = SaveLoadManager.LoadData();
+        //playerData.Step = 0;
+        if(playerData==null)
+        {
+            playerData = new PlayerData();
+        }
 
+        playerData.ShowBall();
     }
 
-    
+
     public void ResetCurrentLevelState()
     {
         ResetGameState();
@@ -81,7 +100,7 @@ public class GameManager : MonoSingleton<GameManager>
         //RESET BALL NUMBER
         Time.timeScale = 1f;
         isGameOver = false;
-        Step = 1;
+        playerData.Step = 1;
     }
 
 

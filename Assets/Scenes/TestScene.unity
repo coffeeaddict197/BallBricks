@@ -5261,6 +5261,11 @@ MonoBehaviour:
     count: 50
     expandable: 1
     firstIndex: 0
+  - gameObject: {fileID: 7976593562188866855, guid: 9e55d0ec3394a704793754968a8e7f36,
+      type: 3}
+    count: 50
+    expandable: 1
+    firstIndex: 0
   pooledGobjects: []
 --- !u!1 &1620104967
 GameObject:
@@ -5566,6 +5571,7 @@ MonoBehaviour:
   _endGamePanel: {fileID: 623276193}
   _pausePanel: {fileID: 1526006157}
   _homePanel: {fileID: 1637472511}
+  _shopPanel: {fileID: 0}
 --- !u!1 &1698563514
 GameObject:
   m_ObjectHideFlags: 0
