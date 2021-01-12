@@ -8,7 +8,7 @@ public class ShopItemScript : MonoBehaviour
 {
     #region Variables
     [Header("Scriptable Object")]
-    public ShopItem itemScriptableObject;
+    public ShopItem ballScriptableObject;
     [Space]
 
     [Header("Item image")]
@@ -36,20 +36,6 @@ public class ShopItemScript : MonoBehaviour
 
     #region Flags
     [Header("Flags")]
-    [SerializeField] bool _isPurchased;
-    public bool IsPurchased
-    {
-        get { return _isPurchased; }
-        set
-        {
-            _isPurchased = value;
-            usingStateObject.SetActive(value);
-            usingStateImg.enabled = value;
-
-            ballImgObject.transform.localPosition = basePos;
-        }
-    }
-
     [SerializeField] bool _isFree;
     public bool IsFree
     {
@@ -59,12 +45,9 @@ public class ShopItemScript : MonoBehaviour
             _isFree = value;
             if (!IsPurchased)
             {
-                if (value) btnAdFree.SetActive(true);
-                else
-                {
-                    btnPrice.SetActive(true);
-                    priceText.text = itemScriptableObject.price.ToString();
-                }
+                btnPrice.SetActive(!value);
+                btnAdFree.SetActive(value);
+                priceText.text = ballScriptableObject.price.ToString();
             }
         }
     }
@@ -77,9 +60,12 @@ public class ShopItemScript : MonoBehaviour
         {
             _inUse = value;
             ToggleUseStatus();
+            TogglePriceTitle();
             if (value) a_Bouncing(); else StopAnimation();
         }
-    } 
+    }
+
+    public bool IsPurchased { get; set; }
     #endregion
 
     #region Static variables
@@ -89,53 +75,46 @@ public class ShopItemScript : MonoBehaviour
     public static Ease easeType = Ease.OutCirc;
 
     public static Vector3 basePos = Vector3.zero;
-    public static Vector3 jumpBasePos = new Vector3(0, -80, 0); 
+    public static Vector3 jumpBasePos = new Vector3(0, -80, 0);
     #endregion
 
     private void Start()
     {
-        ballImg.sprite = itemScriptableObject.mainImg;
+        ballImg.sprite = ballScriptableObject.mainImg;
 
-        IsPurchased = itemScriptableObject.isPurchased;
-        IsFree = itemScriptableObject.isFree;
-        InUse = itemScriptableObject.inUse;
+        IsPurchased = ballScriptableObject.isPurchased;
+        IsFree = ballScriptableObject.isFree;
+        InUse = ballScriptableObject.inUse;
     }
 
-    public void Purchase()
+    public void PurchaseButton_Clicked()
     {
         if (!IsPurchased)
         {
-            bool result = ShopItemManager.Instance.ShowPurchasePanel(itemScriptableObject);
-
-            if (result)
-            {
-                IsPurchased = true;
-                InUse = true;
-                TogglePriceTitle();
-            }
-            else return;
+            ShopItemManager.Instance.ShowPurchasePanel(this);
         }
         else if (!InUse)
         {
             InUse = true;
+            ShopItemManager.Instance.ChangeInUseBall(this);
         }
         else return;
-
-        ShopItemManager.Instance.ChangeInUseBall(this);
     }
 
-    private void TogglePriceTitle() => PriceTitle.SetActive(!PriceTitle.activeSelf);
+    private void TogglePriceTitle() => PriceTitle.SetActive(!IsPurchased);
 
     private void ToggleUseStatus()
     {
         if (InUse) usingStateImg.sprite = ShopItemManager.Instance.InUseImg; else usingStateImg.sprite = ShopItemManager.Instance.NotInUseImg;
         usingStateImg.SetNativeSize();
+        usingStateObject.SetActive(IsPurchased);
+        usingStateImg.enabled = IsPurchased;
     }
 
     private void StopAnimation()
     {
-        ballImgObject.transform.localPosition = basePos;
         ballImgObject.transform.DOKill();
+        ballImgObject.transform.localPosition = basePos;
     }
 
     public void a_Bouncing()

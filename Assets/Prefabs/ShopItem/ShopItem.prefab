@@ -362,12 +362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dea8ee0c42d21f409624a4012f87855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopItemModel: {fileID: 0}
-  itemScriptableObject: {fileID: 0}
+  ballScriptableObject: {fileID: 0}
   ballImg: {fileID: 5881464073437124440}
-  jumpHeight: 100
-  jumpDuration: 0.45
-  easeType: 21
   ballImgObject: {fileID: 8921984550303533618}
   btnPrice: {fileID: 3313675830759165046}
   priceText: {fileID: 8140397580117288485}
@@ -829,7 +825,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3581268266461114055}
-        m_MethodName: Purchase
+        m_MethodName: PurchaseButton_Clicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

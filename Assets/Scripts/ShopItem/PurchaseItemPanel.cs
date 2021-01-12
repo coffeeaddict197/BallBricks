@@ -8,11 +8,12 @@ public class PurchaseItemPanel : MonoBehaviour
 {
     #region Variables
     [Header("Scriptable object")]
+    [SerializeField] ShopItemScript ballScript;
     [SerializeField] ShopItem ball;
     [Space]
 
     [Header("Ball")]
-    [SerializeField] GameObject ballImgObject;
+    [SerializeField] GameObject ballObject;
     [SerializeField] Image ballImg;
     [Space]
 
@@ -26,14 +27,16 @@ public class PurchaseItemPanel : MonoBehaviour
     [SerializeField] GameObject btnPurchase_Nor;
     [Space]
 
-    [Header("Flag")]
-    [SerializeField] bool isFree;
+    public static bool isPurchaseSuccess = false;
     #endregion
 
-    [Header("Animation control")]
+    #region Animation variables
+    [Header("Animation variables")]
+    [SerializeField] GameObject animatedObject;
     [SerializeField] float baseScale = 1f;
-    [SerializeField] float animateScale = 0.1f;
+    [SerializeField] float animatedScale = 0.1f;
     [SerializeField] float scaleDuration = 0.5f;
+    #endregion
 
     private void OnEnable()
     {
@@ -51,11 +54,9 @@ public class PurchaseItemPanel : MonoBehaviour
         ball = selectedBall;
 
         ballName.text = ball.ballName;
-        isFree = ball.isFree;
-
         ballImg.sprite = ball.mainImg;
 
-        if (isFree)
+        if (ball.isFree)
         {
             btnPurchase_Free.SetActive(true);
         }
@@ -68,10 +69,35 @@ public class PurchaseItemPanel : MonoBehaviour
         a_Bouncing();
     }
 
-    public void Show(ShopItem selectedBall)
+    // to do
+    public void Purchase()
     {
-        transform.localScale = Vector3.one * 0.1f;
-        LoadData(selectedBall);
+        if (ball.isFree)
+        {
+            // watch ad here
+            // bool result = ...
+            Debug.Log("Watch ad");
+        }
+        else
+        {
+            // check user balance here
+            Debug.Log("Payment");
+            isPurchaseSuccess = true;
+        }
+
+        if (isPurchaseSuccess)
+        {
+            ballScript.IsPurchased = true;
+            ShopItemManager.Instance.ChangeInUseBall(ballScript);
+            Hide();
+        }
+    }
+
+    public void Show(ShopItemScript selectedBallScript)
+    {
+        ballScript = selectedBallScript;
+        animatedObject.transform.localScale = Vector3.one * animatedScale;
+        LoadData(selectedBallScript.ballScriptableObject);
         gameObject.SetActive(true);
     }
 
@@ -79,12 +105,13 @@ public class PurchaseItemPanel : MonoBehaviour
 
     private void DestroyMyself() => gameObject.SetActive(false);
 
+    #region Animation function
     private void a_Bouncing()
     {
-        ballImgObject.transform.localPosition = ShopItemScript.jumpBasePos;
-        ballImgObject.transform.DOKill();
-        ballImgObject.transform.DOLocalMoveY(
-            ballImgObject.transform.localPosition.y + ShopItemScript.jumpHeight,
+        ballObject.transform.localPosition = ShopItemScript.jumpBasePos;
+        ballObject.transform.DOKill();
+        ballObject.transform.DOLocalMoveY(
+            ballObject.transform.localPosition.y + ShopItemScript.jumpHeight,
              ShopItemScript.jumpDuration,
             true)
             .SetEase(ShopItemScript.easeType)
@@ -93,13 +120,14 @@ public class PurchaseItemPanel : MonoBehaviour
 
     private void a_Appear()
     {
-        transform.DOKill();
-        transform.DOScale(baseScale, scaleDuration);
+        animatedObject.transform.DOKill();
+        animatedObject.transform.DOScale(baseScale, scaleDuration);
     }
 
     private void a_Disappear()
     {
-        transform.DOKill();
-        transform.DOScale(animateScale, scaleDuration).OnComplete(DestroyMyself);
+        animatedObject.transform.DOKill();
+        animatedObject.transform.DOScale(animatedScale, scaleDuration).OnComplete(DestroyMyself);
     }
+    #endregion
 }

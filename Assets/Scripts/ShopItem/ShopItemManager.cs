@@ -14,14 +14,14 @@ public class ShopItemManager : MonoSingleton<ShopItemManager>
 
     public void ChangeInUseBall(ShopItemScript newInUseBallScript)
     {
-        if (newInUseBallScript == inUseBallScript) return;
+        if (newInUseBallScript == inUseBallScript || !newInUseBallScript) return;
         inUseBallScript.InUse = false;
         inUseBallScript = newInUseBallScript;
+        newInUseBallScript.InUse = true;
     }
 
-    public bool ShowPurchasePanel(ShopItem selectedBall)
+    public void ShowPurchasePanel(ShopItemScript selectedBallScript)
     {
-        purchaseItemPanel.Show(selectedBall);
-        return false;
+        purchaseItemPanel.Show(selectedBallScript);
     }
 }
