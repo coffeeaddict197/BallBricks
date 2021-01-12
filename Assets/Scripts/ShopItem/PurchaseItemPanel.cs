@@ -78,6 +78,7 @@ public class PurchaseItemPanel : MonoBehaviour
             // bool result = ...
             Debug.Log("Watch ad");
             //GameManager.playerData.Balls 
+            // asdfasdfasdf
         }
         else
         {
