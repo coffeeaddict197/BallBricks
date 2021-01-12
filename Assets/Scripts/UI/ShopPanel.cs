@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class ShopPanel : MonoBehaviour
 {
+    [Header("User's money")]
+    [SerializeField] Text moneyText;
+
     [Header("Animation variables")]
     [SerializeField] Vector3 basePos;
     [SerializeField] Vector3 desPos = Vector3.zero;
@@ -14,6 +18,8 @@ public class ShopPanel : MonoBehaviour
     private void Start()
     {
         basePos = transform.localPosition;
+
+        moneyText.text = GameManager.playerData.Diamonds.ToString();
     }
 
     private void OnEnable()

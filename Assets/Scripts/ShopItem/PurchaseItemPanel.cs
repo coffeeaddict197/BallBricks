@@ -77,12 +77,20 @@ public class PurchaseItemPanel : MonoBehaviour
             // watch ad here
             // bool result = ...
             Debug.Log("Watch ad");
+            //GameManager.playerData.Balls 
         }
         else
         {
-            // check user balance here
-            Debug.Log("Payment");
-            isPurchaseSuccess = true;
+            if (GameManager.playerData.Diamonds >= ball.price)
+            {
+                GameManager.playerData.Diamonds -= ball.price;
+                isPurchaseSuccess = true;
+            }
+            else
+            {
+                // show invalid balance panel
+                isPurchaseSuccess = false;
+            }
         }
 
         if (isPurchaseSuccess)

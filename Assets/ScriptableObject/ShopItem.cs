@@ -9,7 +9,7 @@ public class ShopItem : ScriptableObject
 
     public string ballName = "Ball";
 
-    public float price = 0;
+    public int price = 100;
 
     public bool isPurchased = false;
     public bool isFree = false;
