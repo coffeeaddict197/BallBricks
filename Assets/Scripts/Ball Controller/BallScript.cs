@@ -13,6 +13,10 @@ public class BallScript : MonoBehaviour
     [Header("Moving control")]
     [SerializeField] Vector2 direction;
     [SerializeField] float speed;
+    [SerializeField] Vector3 randomRotateAngle;
+    [SerializeField] float rotateDuration;
+
+    [SerializeField] Vector3 baseRotate = Vector3.zero;
 
     [Header("Collide manage")]
     [SerializeField] Vector2 collidePos;
@@ -34,7 +38,11 @@ public class BallScript : MonoBehaviour
     {
         if (isMoving)
         {
-            if (rigid.velocity == Vector2.zero) rigid.velocity = direction * speed;
+            if (rigid.velocity == Vector2.zero)
+            {
+                rigid.velocity = direction * speed;
+                RandomRotate();
+            }
             else if (transform.position.y < BallLauncher.Instance.BasePos.y - BallLauncher.Instance.basePosOffset) Stop();
         }
     }
@@ -45,7 +53,15 @@ public class BallScript : MonoBehaviour
         if (check != null)
         {
             check.Collided();
+            RandomRotate();
         }
+    }
+
+    private void RandomRotate()
+    {
+        transform.DOKill();
+        randomRotateAngle = new Vector3(0, 0, Random.Range(-180, 180));
+        transform.DORotate(randomRotateAngle, rotateDuration, RotateMode.Fast);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -102,7 +118,9 @@ public class BallScript : MonoBehaviour
         transform.DOMove(BallLauncher.Instance.BasePos, BallLauncher.Instance.moveTime);
         rigid.velocity = Vector2.zero;
         isMoving = false;
+
+        transform.rotation = Quaternion.Euler(baseRotate);
     }
 
-   
+
 }

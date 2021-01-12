@@ -65,8 +65,6 @@ public class GameManager : MonoSingleton<GameManager>
         {
             playerData = new PlayerData();
         }
-
-        playerData.ShowBall();
     }
 
 

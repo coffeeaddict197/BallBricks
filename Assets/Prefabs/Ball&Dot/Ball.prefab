@@ -73,8 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3286163911610860551, guid: 152de98c274543548b0a03c762ccb87c,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bde952e5e3316e48bb03d5e9c3b6a3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -139,5 +138,8 @@ MonoBehaviour:
   isMoving: 0
   direction: {x: 0, y: 0}
   speed: 0
+  randomRotateAngle: {x: 0, y: 0, z: 0}
+  rotateDuration: 2
+  baseRotate: {x: 0, y: 0, z: 0}
   collidePos: {x: 0, y: 0}
   collideObject: {fileID: 0}

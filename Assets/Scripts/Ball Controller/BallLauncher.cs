@@ -157,6 +157,5 @@ public class BallLauncher : MonoSingleton<BallLauncher>
             ReturnedBallsCounter = Balls.Count;
             e_OnReset?.Invoke();
         }
-
     }
 }
