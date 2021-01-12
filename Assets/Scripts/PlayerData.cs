@@ -51,6 +51,7 @@ public class PlayerData
         set
         {
             _diamonds = value;
+            SaveLoadManager.SaveData(this);
         }
     }
 
@@ -58,15 +59,7 @@ public class PlayerData
     {
         HighScore = 0;
         Step = 0;
-        Diamonds = 0;
+        Diamonds = 500;
         Balls = new bool[23];
-    }
-
-    public void ShowBall()
-    {
-        for(int i = 0; i< Balls.Length; i++)
-        {
-            Debug.LogFormat("{0} = {1}", i, Balls[i]);
-        }
     }
 }
