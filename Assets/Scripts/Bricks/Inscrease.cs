@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inscrease : NodePiece , ICollisionWithBall
 {
-    private void Awake()
+    private new void Awake()
     {
         //Do nothing
     }

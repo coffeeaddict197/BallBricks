@@ -23,6 +23,10 @@ public class SoundManager : MonoSingleton<SoundManager>
         onMusic = PlayerPrefs.GetInt(KEY_MUSIC, 1);
         Initialize();
 
+        Debug.Log(onSound);
+        Debug.Log(onMusic);
+
+
     }
 
     void Initialize()
@@ -141,7 +145,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         {
             foreach (Sound s in soundFXs)
             {
-                if(s.loop)
+                if (s.loop)
                     s.source.Play();
                 StartCoroutine(InscraseVolume(s));
             }
@@ -205,5 +209,31 @@ public class SoundManager : MonoSingleton<SoundManager>
         }
     }
 
+    public void MuteSound()
+    {
+        onSound = 0;
+        PlayerPrefs.SetInt(KEY_SOUND, 0);
+    }
+
+    public void MuteMusic()
+    {
+        onMusic = 0;
+        PlayerPrefs.SetInt(KEY_MUSIC, 0);
+    }
+
+    public void UnmuteSound()
+    {
+        onSound = 1;
+        PlayerPrefs.SetInt(KEY_SOUND, 1);
+    }
+
+    public void UnmuteMusic()
+    {
+        onMusic = 1;
+        PlayerPrefs.SetInt(KEY_MUSIC, 1);
+    }
+
+
+    
 
 }

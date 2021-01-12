@@ -8,7 +8,10 @@ public class HomePanel : MonoBehaviour
 {
     [Header("Button")]
     [SerializeField] Button _btnPlay;
+    [SerializeField] Button _btnSetting;
 
+    [Header("Child pannel")]
+    [SerializeField] GameObject optionsPanel;
 
     private void Awake()
     {
@@ -23,6 +26,7 @@ public class HomePanel : MonoBehaviour
     void AddEventClick()
     {
         this._btnPlay.onClick.AddListener(Play);
+        this._btnSetting.onClick.AddListener(ShowSettingPanel);
     }
 
     public void Show()
@@ -37,5 +41,10 @@ public class HomePanel : MonoBehaviour
             GameManager.Instance.InitializeAllObject();
             UIManager.Instance.ShowGamePanel();
         });
+    }
+
+    void ShowSettingPanel()
+    {
+        optionsPanel.gameObject.SetActive(true);
     }
 }
