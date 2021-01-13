@@ -16,5 +16,5 @@ MonoBehaviour:
   ballName: Ball 4
   price: 100
   isPurchased: 0
-  isFree: 0
+  isFree: 1
   inUse: 0

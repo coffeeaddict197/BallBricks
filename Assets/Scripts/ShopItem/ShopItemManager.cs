@@ -12,6 +12,20 @@ public class ShopItemManager : MonoSingleton<ShopItemManager>
     [SerializeField] ShopItemScript inUseBallScript;
     [SerializeField] PurchaseItemPanel purchaseItemPanel;
 
+    [Header("Ball renderers")]
+    public List<SpriteRenderer> ballRenderers;
+
+    [Header("Panel")]
+    [SerializeField] PurchaseErrorPanel purchaseErrorPanel;
+
+    private void Start()
+    {
+        foreach (var ball in GameObject.FindGameObjectsWithTag(BallLauncher.BALL_TAG))
+        {
+            ballRenderers.Add(ball.GetComponent<SpriteRenderer>());
+        }
+    }
+
     public void ChangeInUseBall(ShopItemScript newInUseBallScript)
     {
         if (newInUseBallScript == inUseBallScript || !newInUseBallScript) return;
@@ -26,12 +40,13 @@ public class ShopItemManager : MonoSingleton<ShopItemManager>
         purchaseItemPanel.Show(selectedBallScript);
     }
 
+    public void ShowPurchaseErrorPanel() => purchaseErrorPanel.Show();
+
     private void UpdateBallSprite()
     {
-        GameObject[] balls = GameObject.FindGameObjectsWithTag(BallLauncher.BALL_TAG);
-        foreach (var ball in balls)
+        foreach (var ballRenderer in ballRenderers)
         {
-            ball.GetComponent<SpriteRenderer>().sprite = inUseBallScript.ballScriptableObject.mainImg;
+            ballRenderer.sprite = inUseBallScript.ballScriptableObject.mainImg;
         }
     }
 }
