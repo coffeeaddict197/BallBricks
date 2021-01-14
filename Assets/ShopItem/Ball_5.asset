@@ -15,6 +15,6 @@ MonoBehaviour:
   mainImg: {fileID: 21300000, guid: ae089f780caaf184d81e2e2d4b2c3106, type: 3}
   ballName: Ball 5
   price: 100
-  isPurchased: 0
-  isFree: 0
+  isPurchased: 1
+  isFree: 1
   inUse: 0

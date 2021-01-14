@@ -69,16 +69,16 @@ public class PurchaseItemPanel : MonoBehaviour
         a_Bouncing();
     }
 
-    // to do
     public void Purchase()
+    {
+        StartCoroutine(CR_Purchasing());
+    }
+
+    IEnumerator CR_Purchasing()
     {
         if (ball.isFree)
         {
-            // watch ad here
-            // bool result = ...
-            Debug.Log("Watch ad");
-            //GameManager.playerData.Balls 
-            // asdfasdfasdf
+            yield return StartCoroutine(CR_ShowAds());
         }
         else
         {
@@ -89,16 +89,39 @@ public class PurchaseItemPanel : MonoBehaviour
             }
             else
             {
-                // show invalid balance panel
                 isPurchaseSuccess = false;
             }
         }
 
+        HandlePurchaseResult();
+    }
+
+    IEnumerator CR_ShowAds()
+    {
+        AdsManager.Instance.ShowRewardAd();
+        while (AdsManager.Instance.IsOpening)
+        {
+            yield return null;
+        }
+
+        if (AdsManager.Instance.IsEarnedReward)
+        {
+            isPurchaseSuccess = true;
+            AdsManager.Instance.ResetStatus();
+        }
+    }
+
+    private void HandlePurchaseResult()
+    {
         if (isPurchaseSuccess)
         {
             ballScript.IsPurchased = true;
             ShopItemManager.Instance.ChangeInUseBall(ballScript);
             Hide();
+        }
+        else
+        {
+            ShopItemManager.Instance.ShowPurchaseErrorPanel();
         }
     }
 
