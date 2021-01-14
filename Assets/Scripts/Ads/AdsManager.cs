@@ -7,7 +7,14 @@ public class AdsManager : MonoSingleton<AdsManager>
 {
     const string REWARD_TYPE = "Reward";
 
-    private RewardedAd setSkinAd;
+    const string BANNER_AD_UNIT_ID_TEST = "ca-app-pub-3940256099942544/6300978111";
+    const string REWARD_AD_UNIT_ID_TEST = "ca-app-pub-3940256099942544/5224354917";
+
+    const string BANNER_AD_UNIT_ID = "ca-app-pub-2136479507730706/2794654305";
+    const string REWARD_AD_UNIT_ID = "ca-app-pub-2136479507730706/8408915393";
+
+    private RewardedAd rewardAd;
+    private BannerView bannerView;
 
     [Header("Flags")]
     [SerializeField] bool _isOpening;
@@ -26,7 +33,35 @@ public class AdsManager : MonoSingleton<AdsManager>
     {
         base.Awake();
         CreateAndLoadRewardAds();
+        RequestBanner();
+
         ResetStatus();
+    }
+
+    private void RequestBanner()
+    {
+        string adUnitId;
+
+#if UNITY_EDITOR
+        adUnitId = BANNER_AD_UNIT_ID_TEST;
+#elif UNITY_ANDROID
+        adUnitId = BANNER_AD_UNIT_ID;
+#else
+        adUnitId = "";
+#endif
+
+        if (string.IsNullOrEmpty(adUnitId))
+        {
+            Debug.Log("Unexpected platform");
+            return;
+        }
+
+        // Create a 320x50 banner at the top of the screen.
+        bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+        // Create an empty ad request.
+        AdRequest request = new AdRequest.Builder().Build();
+        // Load the banner with the request.
+        bannerView.LoadAd(request);
     }
 
     private void CreateAndLoadRewardAds()
@@ -34,23 +69,32 @@ public class AdsManager : MonoSingleton<AdsManager>
         string adUnitId;
 
 #if UNITY_EDITOR
-        adUnitId = "ca-app-pub-3940256099942544/5224354917";
+        adUnitId = REWARD_AD_UNIT_ID_TEST;
 #elif UNITY_ANDROID
-        adUnitId = "ca-app-pub-2136479507730706~3705606835";
+        adUnitId = REWARD_AD_UNIT_ID;
+#else
+        adUnitId = "";
 #endif
 
-        setSkinAd = new RewardedAd(adUnitId);
+        if (string.IsNullOrEmpty(adUnitId))
+        {
+            Debug.Log("Unexpected platform");
+            return;
+        }
+
+        rewardAd = new RewardedAd(adUnitId);
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
         // Load the rewarded ad with the request.
-        setSkinAd.LoadAd(request);
+        rewardAd.LoadAd(request);
 
-        setSkinAd.OnUserEarnedReward += RewardedAd_OnUserEarnedReward;
-        setSkinAd.OnAdOpening += RewardedAd_OnAdOpening;
-        setSkinAd.OnAdFailedToShow += RewardedAd_OnAdFailedToShow;
-        setSkinAd.OnAdClosed += RewardedAd_OnAdClosed;
+        rewardAd.OnUserEarnedReward += RewardedAd_OnUserEarnedReward;
+        rewardAd.OnAdOpening += RewardedAd_OnAdOpening;
+        rewardAd.OnAdFailedToShow += RewardedAd_OnAdFailedToShow;
+        rewardAd.OnAdClosed += RewardedAd_OnAdClosed;
     }
 
+    #region RewardAd handlers
     private void RewardedAd_OnAdFailedToShow(object sender, AdErrorEventArgs e)
     {
         ResetStatus();
@@ -79,13 +123,14 @@ public class AdsManager : MonoSingleton<AdsManager>
     {
         _isOpening = false;
         CreateAndLoadRewardAds();
-    }
+    } 
+    #endregion
 
     public void ShowRewardAd()
     {
-        if (setSkinAd.IsLoaded())
+        if (rewardAd.IsLoaded())
         {
-            setSkinAd.Show();
+            rewardAd.Show();
         }
     }
 
