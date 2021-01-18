@@ -85,6 +85,9 @@ public class GameManager : MonoSingleton<GameManager>
         MapGenerator.Instance.GenerateLevel(1);
         LevelManager.Instance.currentLevel.ReRandomPointNode();
         BallLauncher.Instance.ResetStateBall();
+        ShopItemManager.Instance.UpdateBallSprite();
+
+
     }
 
     public void BreakAllInMainGame()

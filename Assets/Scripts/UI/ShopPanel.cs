@@ -38,6 +38,6 @@ public class ShopPanel : MonoBehaviour
     private void a_Disappear()
     {
         transform.DOKill();
-        transform.DOLocalMove(basePos, duration);
+        transform.DOLocalMove(basePos, duration).OnComplete(() => { this.gameObject.SetActive(false); }) ;
     }
 }

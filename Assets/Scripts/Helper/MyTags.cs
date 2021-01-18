@@ -22,3 +22,7 @@ public static class MyTags
     public const string DIAMIOND = "Diamond";
 
 }
+
+
+public class testtest : MonoBehaviour{    string playerName;    private void Start()    {        Debug.log(playerName);  // --> null    
+    }}

@@ -84,6 +84,9 @@ public class BallLauncher : MonoSingleton<BallLauncher>
             Balls[i].SetActive(true);
             BallScripts.Add(Balls[i].GetComponent<BallScript>());
         }
+
+
+
     }
 
     private void OnValidate()

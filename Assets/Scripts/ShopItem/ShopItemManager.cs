@@ -42,8 +42,14 @@ public class ShopItemManager : MonoSingleton<ShopItemManager>
 
     public void ShowPurchaseErrorPanel() => purchaseErrorPanel.Show();
 
-    private void UpdateBallSprite()
+    public void UpdateBallSprite()
     {
+        ballRenderers.Clear();
+        foreach (var ball in GameObject.FindGameObjectsWithTag(BallLauncher.BALL_TAG))
+        {
+            ballRenderers.Add(ball.GetComponent<SpriteRenderer>());
+        }
+
         foreach (var ballRenderer in ballRenderers)
         {
             ballRenderer.sprite = inUseBallScript.ballScriptableObject.mainImg;

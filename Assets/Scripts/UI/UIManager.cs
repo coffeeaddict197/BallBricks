@@ -23,8 +23,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void ShowHomePanel() 
     {
         _homePanel.Show();
-    }  
-    public void ShowGamePanel() => _gamePanel.Show();
+    }
+    public void ShowGamePanel()
+    {
+        _gamePanel.Show();
+    }
     public void HideGamePanel()
     {
         _gamePanel.Hide();

@@ -9,9 +9,11 @@ public class HomePanel : MonoBehaviour
     [Header("Button")]
     [SerializeField] Button _btnPlay;
     [SerializeField] Button _btnSetting;
+    [SerializeField] Button _btnShop;
 
     [Header("Child pannel")]
     [SerializeField] GameObject optionsPanel;
+    [SerializeField] GameObject ShopBalls;
 
     private void Awake()
     {
@@ -27,6 +29,7 @@ public class HomePanel : MonoBehaviour
     {
         this._btnPlay.onClick.AddListener(Play);
         this._btnSetting.onClick.AddListener(ShowSettingPanel);
+        this._btnShop.onClick.AddListener(ShowBtnShop);
     }
 
     public void Show()
@@ -46,5 +49,19 @@ public class HomePanel : MonoBehaviour
     void ShowSettingPanel()
     {
         optionsPanel.gameObject.SetActive(true);
+    }
+
+    void ShowBtnShop()
+    {
+        ShopBalls.SetActive(true);
+        transform.DOKill();
+        transform.DOLocalMoveX(-1500 , 0.5f).SetUpdate(true);
+    }
+
+
+    public void BackToOrigin()
+    {
+        transform.DOLocalMoveX( 0, 0.5f).SetUpdate(true);
+
     }
 }
